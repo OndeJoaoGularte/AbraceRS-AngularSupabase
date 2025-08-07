@@ -1,0 +1,77 @@
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2>{{ isEditMode ? "Editar Projeto" : "Cadastrar Novo Projeto" }}</h2>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nome do Projeto</label>
+                    <input type="text" id="name" formControlName="name" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Resumo (aparecerá nos cards)</label>
+                    <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select id="status" formControlName="status" class="form-select">
+                        <option value="true">Ativo</option>
+                        <option value="false">Inativo</option>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="start" class="form-label">Data de Início</label>
+                        <input type="date" id="start" formControlName="start" class="form-control" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="finish" class="form-label">Data de Conclusão (opcional)</label>
+                        <input type="date" id="finish" formControlName="finish" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="image_url" class="form-label">Imagem de Destaque</label>
+                    <input type="file" id="imageFile" class="form-control" (change)="onFileSelected($event)"
+                        accept="image/png, image/jpeg">
+                </div>
+
+                @if (imagePreview) {
+                <div class="mb-4 text-center">
+                    <p class="mb-2">Pré-visualização:</p>
+                    <img [src]="imagePreview" alt="Pré-visualização da Imagem"
+                        style="max-width: 300px; max-height: 200px; border-radius: 8px;">
+                </div>
+                }
+
+                <div class="mb-4">
+                    <label class="form-label">Conteúdo Completo do Projeto</label>
+                    <div class="editor-wrapper border rounded">
+                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+                        <ngx-editor [editor]="editor" formControlName="content"></ngx-editor>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <a routerLink="/projects" class="btn btn-secondary me-2">Cancelar</a>
+                    <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid || isUploading">
+                        
+                        @if (isUploading) {
+                            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                            <span>Salvando...</span>
+                        } @else {
+                            <span>{{ isEditMode ? 'Salvar Alterações' : 'Cadastrar Projeto' }}</span>
+                        }
+
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

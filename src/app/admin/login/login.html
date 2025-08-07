@@ -1,0 +1,36 @@
+<div class="login-container">
+  <div class="card shadow-lg">
+    <div class="card-body p-5">
+      <h3 class="card-title text-center mb-4">Acesso Administrativo</h3>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" formControlName="email" class="form-control form-control-lg">
+        </div>
+        <div class="mb-4">
+          <label for="password" class="form-label">Senha</label>
+          <input type="password" id="password" formControlName="password" class="form-control form-control-lg">
+        </div>
+
+        @if (errorMessage) {
+          <div class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+        }
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg" [disabled]="loginForm.invalid || loading">
+            
+            @if (loading) {
+              <span class="spinner-border spinner-border-sm me-1"></span>
+              <span>Entrando...</span>
+            } @else {
+              <span>Entrar</span>
+            }
+
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

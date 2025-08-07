@@ -1,0 +1,16 @@
+<div class="container mt-4">
+  @if (project) {
+    <a routerLink="/atuamos">&larr; Voltar para a lista de projetos</a>
+    <h1 class="mt-3">{{ project.name }}</h1>
+
+    <div class="meta-info text-muted mb-3">
+      @if (project.updated) {
+        <span> | Última edição às {{ project.updated | date:'HH:mm' }} do dia {{ project.updated | date:'dd/MM/yyyy' }}</span>
+      }
+    </div>
+
+    <hr>
+    
+    <div [innerHTML]="safeHtmlContent"></div>
+  }
+</div>

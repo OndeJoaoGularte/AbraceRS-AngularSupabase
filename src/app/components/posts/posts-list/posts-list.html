@@ -1,0 +1,79 @@
+<div class="container mt-4">
+  <div class="page-header">
+    <h1>Blog</h1>
+    @if (authService.isLoggedIn()) {
+    <a routerLink="/admin/post/new" class="btn btn-success btn-add-post">
+      + Adicionar Nova Postagem
+    </a>
+    }
+  </div>
+
+  <div class="card p-3 mb-4 shadow-sm">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <label for="ordination" class="form-label fw-bold">Ordenar por:</label>
+        <select id="ordination" class="form-select" [(ngModel)]="presentOrdination" (change)="loadPosts()">
+          <option value="publish-desc">Mais Recentes</option>
+          <option value="publish-asc">Mais Antigas</option>
+          <option value="title-asc">Ordem Alfabética (A-Z)</option>
+          <option value="title-desc">Ordem Alfabética (Z-A)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <input type="text" class="form-control" placeholder="Pesquisar por título ou resumo..." #searchInput
+      (input)="onSearchInput(searchInput.value)" [value]="searchTool">
+  </div>
+
+  @if (loading) {
+  <div class="row">
+    @for (item of [1, 2, 3, 4]; track item) {
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="skeleton skeleton-image"></div>
+        <div class="card-body">
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-text"></div>
+        </div>
+        <div class="card-footer bg-white border-0">
+          <div class="skeleton skeleton-button"></div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  } @else {
+  <div class="row">
+    @for (post of posts; track post.id) {
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100 shadow-sm item-card clickable-card" (click)="showDetails(post.id)">
+        <img [src]="post.image_url || 'assets/images/placeholder.png'" class="card-img-top" alt="{{ post.title }}">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="card-text flex-grow-1">{{ post.summary }}</p>
+        </div>
+        <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+          <small class="text-muted">{{ post.publish | date:'dd/MM/yyyy' }}</small>
+          @if (authService.isLoggedIn()) {
+          <div>
+            <a [routerLink]="['/admin/post/edit', post.id]" (click)="$event.stopPropagation()"
+              class="btn btn-secondary btn-sm me-2">Editar</a>
+            <button (click)="deletePost(post.id, $event)" class="btn btn-danger btn-sm">Deletar</button>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  @if (posts.length === 0) {
+  <div class="text-center p-5">
+    <p class="h4 text-muted">Nenhuma postagem encontrada</p>
+    <p class="text-muted">Tente ajustar seus filtros ou o termo de busca.</p>
+  </div>
+  }
+  }
+</div>

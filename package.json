@@ -20,12 +20,17 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.1.2",
     "@angular/common": "^20.1.0",
     "@angular/compiler": "^20.1.0",
     "@angular/core": "^20.1.0",
     "@angular/forms": "^20.1.0",
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
+    "@fortawesome/fontawesome-free": "^7.0.0",
+    "@supabase/supabase-js": "^2.52.0",
+    "bootstrap": "^5.3.7",
+    "ngx-editor": "^19.0.0-beta.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

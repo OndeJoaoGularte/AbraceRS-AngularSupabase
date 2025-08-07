@@ -1,0 +1,47 @@
+<header>
+  <div class="top-bar" [class.scrolled]="isScrolled">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="contact-info">
+        <span><i class="fas fa-phone me-2"></i>(51) 99380-1665</span>
+        <span class="ms-4 d-none d-md-inline"><i class="fas fa-envelope me-2"></i>institutoabracers&#64;gmail.com</span>
+      </div>
+      <div class="social-icons d-flex">
+        <a href="https://www.instagram.com/institutoabracers/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@institutoabracers" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="https://x.com/InstAbraceRS" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.youtube.com/@AbraceRS" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="nav-container">
+      <a class="nav-logo" routerLink="/">
+        <img src="assets/images/abracelogors.png" alt="Logo Instituto AbraceRS" height="50" />
+      </a>
+
+      <div class="nav-main-group" [class.active]="isMenuOpen">
+        <ul class="nav-links">
+          <li><a class="nav-link" routerLink="/home" routerLinkActive="active-link" (click)="isMenuOpen = false">Home</a></li>
+          <li><a class="nav-link" routerLink="/somos" routerLinkActive="active-link" (click)="isMenuOpen = false">Quem Somos</a></li>
+          <li><a class="nav-link" routerLink="/atuamos" routerLinkActive="active-link" (click)="isMenuOpen = false">Como Atuamos</a></li>
+          <li><a class="nav-link" routerLink="/blog" routerLinkActive="active-link" (click)="isMenuOpen = false">Blog</a></li>
+          <li><a class="nav-link" routerLink="/associar" routerLinkActive="active-link" (click)="isMenuOpen = false">Associar-se</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <a class="nav-cta" (click)="openVakinha()">Doar</a>
+          @if (authService.isLoggedIn()) {
+            <button (click)="authService.signOut()" class="btn-logout">Sair</button>
+          }
+        </div>
+      </div>
+
+      <button type="button" class="hamburger-menu" (click)="toggleMenu()" [class.active]="isMenuOpen" aria-label="Abrir ou fechar menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+</header>

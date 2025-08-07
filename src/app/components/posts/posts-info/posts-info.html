@@ -1,0 +1,18 @@
+<div class="container mt-4">
+  @if (post) {
+    <a routerLink="/posts">&larr; Voltar para o blog</a>
+    <h1 class="mt-3">{{ post.title }}</h1>
+
+    <div class="meta-info text-muted mb-3">
+      <span>Publicado em: {{ post.publish | date:'dd/MM/yyyy' }}</span>
+      
+      @if (post.updated) {
+        <span> | Última edição às {{ post.updated | date:'HH:mm' }} do dia {{ post.updated | date:'dd/MM/yyyy' }}</span>
+      }
+    </div>
+
+    <hr>
+    
+    <div [innerHTML]="safeHtmlContent"></div>
+  }
+</div>

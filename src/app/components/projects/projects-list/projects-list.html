@@ -1,0 +1,97 @@
+<div class="container">
+
+  <div class="page-header">
+    <h1>Nossos Projetos</h1>
+    @if (authService.isLoggedIn()) {
+      <a routerLink="/admin/project/new" class="btn btn-success btn-add-project">
+        + Adicionar Novo Projeto
+      </a>
+    }
+  </div>
+
+  <div class="controls-panel card p-3 mb-4 shadow-sm">
+    <div class="row mb-3">
+      <div class="col-md-7">
+        <label class="form-label fw-bold">Filtrar por Status:</label>
+        <div class="btn-group w-100" role="group">
+          <button type-="button" class="btn btn-outline-info" [class.active]="filterStatus === 'all'"
+            (click)="filterByStatus('all')">Todos</button>
+          <button type="button" class="btn btn-outline-info" [class.active]="filterStatus === true"
+            (click)="filterByStatus(true)">Ativos</button>
+          <button type="button" class="btn btn-outline-info" [class.active]="filterStatus === false"
+            (click)="filterByStatus(false)">Inativos</button>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <label for="ordination" class="form-label fw-bold">Ordenar por:</label>
+        <select id="ordination" class="form-select" [(ngModel)]="presentOrdination" (change)="loadProjects()">
+          <option value="name-asc">Ordem Alfabética (A-Z)</option>
+          <option value="name-desc">Ordem Alfabética (Z-A)</option>
+          <option value="start-desc">Mais Recentes</option>
+          <option value="start-asc">Mais Antigos</option>
+          <option value="updated-desc">Atualização Mais Recente</option>
+          <option value="updated-asc">Atualização Mais Antiga</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <label class="form-label fw-bold">Busca Rápida:</label>
+        <div class="search-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" class="form-control" placeholder="Pesquisar por nome ou descrição..." #searchInput
+            (input)="onSearchInput(searchInput.value)" [value]="searchTool">
+        </div>
+      </div>
+    </div>
+  </div>
+  @if (loading) {
+    <div class="row">
+      @for (item of [1, 2, 3, 4]; track item) {
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="skeleton skeleton-image"></div>
+            <div class="card-body">
+              <div class="skeleton skeleton-title"></div>
+              <div class="skeleton skeleton-text"></div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="row">
+      @for (project of projects; track project.id) {
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="card h-100 shadow-sm project-card clickable-card" (click)="showDetails(project.id)" [class.inactive-card]="!project.status">
+            <img [src]="project.image_url || 'assets/images/placeholder.png'" class="card-img-top" alt="{{ project.name }}">
+            <div class="card-body d-flex flex-column">
+              <div class="mb-2">
+                @if (project.status) {
+                  <span class="badge status-badge-active">ATIVO</span>
+                } @else {
+                  <span class="badge status-badge-inactive">INATIVO</span>
+                }
+              </div>
+              <h5 class="card-title">{{ project.name }}</h5>
+              <p class="card-text flex-grow-1">{{ project.description }}</p>
+              <p class="card-text"><small class="text-muted">Início: {{ project.start | date:'dd/MM/yyyy' }}</small></p>
+            </div>
+            @if (authService.isLoggedIn()) {
+              <div class="card-footer bg-white border-0">
+                <a [routerLink]="['/admin/project/edit', project.id]" (click)="$event.stopPropagation()" class="btn btn-edit btn-sm me-2">Editar</a>
+                <button (click)="deleteProject(project.id, $event)" class="btn btn-delete btn-sm">Deletar</button>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+    @if (projects.length === 0) {
+      <div class="text-center p-5">
+        <p class="h4 text-muted">Nenhum projeto encontrado</p>
+        <p class="text-muted">Tente ajustar seus filtros ou o termo de busca.</p>
+      </div>
+    }
+  }
+</div>

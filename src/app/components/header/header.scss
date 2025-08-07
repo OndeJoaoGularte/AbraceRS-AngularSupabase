@@ -1,0 +1,246 @@
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/*
+  Barra Superior
+*/
+
+.top-bar {
+  height: 40px;
+  background-color: var(--cor-principal);
+  color: var(--cor-texto-claro);
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: height 1s ease-in-out, opacity 0.5s ease;
+  overflow: hidden;
+
+  .container {
+    height: 100%;
+    padding: 0 2rem;
+  }
+
+  .contact-info i {
+    color: var(--cor-destaque);
+  }
+
+  .social-icons {
+    gap: 1.2rem;
+  }
+
+  .social-icons a {
+    color: var(--cor-texto-claro);
+    font-size: 1.1rem;
+    transition: color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+      color: var(--cor-destaque);
+      transform: scale(1.1);
+    }
+  }
+}
+
+.top-bar.scrolled {
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+}
+
+/*
+  Barra de Navegação
+*/
+
+nav {
+  height: 70px;
+  background-color: #fff;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.nav-logo img {
+  display: block;
+}
+
+.nav-main-group {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: var(--cor-texto);
+  text-decoration: none;
+  font-weight: 700;
+  position: relative;
+  transition: color 0.3s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--cor-principal);
+    transition: width 0.3s ease;
+  }
+
+  &:hover,
+  &.active-link {
+    color: var(--cor-principal);
+  }
+
+  &:hover::after,
+  &.active-link::after {
+    width: 100%;
+  }
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-cta {
+  background-color: var(--cor-destaque);
+  color: var(--cor-texto);
+  padding: 0.6rem 1.5rem; // Padding ajustado
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #d4ac0d; // Tom mais escuro do amarelo
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.btn-logout {
+  background: none;
+  border: 1px solid var(--cor-secundaria);
+  color: var(--cor-secundaria);
+  font-weight: 700;
+  border-radius: 50px; // Deixando redondo para combinar com o CTA
+  padding: 0.6rem 1.5rem; // Padding ajustado
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-texto-claro);
+  }
+}
+
+// 3. FIX DE ALINHAMENTO
+// Garante que o line-height não interfira no alinhamento do flex
+.nav-cta,
+.btn-logout,
+.nav-link {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+}
+
+/* Responsividade */
+@media (max-width: 991px) {
+  .top-bar {
+    display: none;
+  }
+
+  nav {
+    height: 80px;
+  }
+
+  .nav-main-group {
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background-color: #fff;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    gap: 2rem;
+
+    &.active {
+      display: flex;
+    }
+  }
+
+  .nav-links {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .nav-actions {
+    flex-direction: column;
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 1001;
+
+    span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: var(--cor-texto);
+      border-radius: 3px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    &.active span {
+      background-color: var(--cor-texto);
+    }
+
+    &.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    &.active span:nth-child(2) {
+      opacity: 0;
+    }
+    &.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+}
