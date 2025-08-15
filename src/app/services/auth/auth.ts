@@ -10,14 +10,14 @@ import { Router } from '@angular/router';
 export class Auth {
   private supabase: SupabaseClient;
   
-  private currentUser = new BehaviorSubject<User | null>(null);
+  private currentUser = new BehaviorSubject<User | null>(null); // guarda o estado atual do usuário
   public currentUser$: Observable<User | null> = this.currentUser.asObservable();
 
   constructor(private router: Router) {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
 
-    this.supabase.auth.onAuthStateChange((event, session) => {
-      this.currentUser.next(session?.user ?? null);
+    this.supabase.auth.onAuthStateChange((event, session) => { // monitora a mudança do estado de usuário
+      this.currentUser.next(session?.user ?? null); // atualiza o BehaviorSubject com os novos dados
     });
   }
 

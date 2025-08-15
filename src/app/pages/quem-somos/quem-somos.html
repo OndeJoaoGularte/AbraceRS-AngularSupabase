@@ -1,1 +1,125 @@
-<p>quem-somos works!</p>
+<div class="quem-somos-page">
+
+  <section class="abrace-intro text-center">
+    <div class="container">
+      <h1 class="abrace-title">Nossa História</h1>
+      <p class="lead text-muted">Nascemos da solidariedade em meio ao caos, com um propósito: o povo pelo povo. Nascemos da solidariedade em meio ao caos, com um propósito: o povo pelo povo. Nascemos da solidariedade em meio ao caos, com um propósito: o povo pelo povo.</p>
+    </div>
+  </section>
+
+  <section class="abrace-sectionw section-origin">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <h2 class="abrace-title">A Resposta a uma Catástrofe</h2>
+          <p>O <strong>Instituto AbraceRS</strong> foi fundado em maio de 2024 como uma resposta direta à catástrofe das enchentes que devastaram o Rio Grande do Sul. O que começou como um grupo de voluntários nas frentes de resgate no 4º Distrito de Porto Alegre, rapidamente se tornou um movimento organizado.</p>
+          <p>Com a diminuição da atenção geral, sentimos a urgência de estruturar nosso trabalho para dar continuidade às ações, levando ajuda onde ela mais demora a chegar.</p>
+        </div>
+        <div class="col-lg-6">
+          <img src="assets/images/quemsomos/instituto.jpg" class="img-fluid rounded shadow-lg" alt="Voluntários em ação">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="abrace-sectionc section-mission">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <div class="abrace-card">
+            <div class="abrace-icon"><i class="fas fa-bullseye"></i></div>
+              <h3>
+                Missão
+              </h3>
+              <p class="mission-text">
+                Promover ações paliativas, corretivas e/ou preventivas voltadas à população de cidades e comunidades resilientes através de atividades e trabalhos de relevância pública e social. Prestar suporte e oferecer amparo para vítimas de eventos diversos, naturais ou não, sendo climáticos, de saúde, catástrofes ou calamidades diversas nas cidades, estado, país e mundo. 
+              </p>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <div class="abrace-card">
+            <div class="abrace-icon"><i class="fas fa-eye"></i></div>
+              <h3>
+                Visão
+              </h3>
+              <p class="mission-text">
+                Ser um farol de esperança, liderando esforços que impactam positivamente vidas e comunidades, buscando construir um mundo onde todas as pessoas possam prosperar e encontrar apoio. Em essência, ser uma referência em ação humanitária e promover a solidariedade e a dignidade humana, especialmente para aqueles que vivem em situação de vulnerabilidade
+              </p>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <div class="abrace-card">
+            <div class="abrace-icon"><i class="fas fa-heart"></i></div>
+              <h3>
+                Valores
+              </h3>
+              <p class="mission-text">
+                Humanidade, neutralidade, imparcialidade e independência. Além disso, a transparência, a responsabilidade e o respeito pela diversidade e pluralismo são cruciais em nossas operações.
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="abrace-sectionw section-team text-center">
+    <div class="container">
+      <h2 class="abrace-title">Equipe</h2>
+      <p class="lead text-muted mb-5">Um grupo 100% voluntário de pessoas que acreditam no poder da solidariedade.</p>
+      <div class="row justify-content-center">
+        @for (member of teamMembers; track member.name) {
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="team-member-card">
+              <img [src]="member.image" alt="Foto de {{ member.name }}">
+              <h5 class="team-member-name">{{ member.name }}</h5>
+              <h6 class="team-member-role">{{ member.role }}</h6>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="abrace-sectionc section-transparency text-center">
+    <div class="container">
+      <h2 class="abrace-title">Transparência</h2>
+      <p class="lead text-muted mb-5">Acreditamos que a confiança é construída com clareza e responsabilidade. Aqui você pode acessar documentos importantes e acompanhar o impacto do nosso trabalho.</p>
+      
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <div class="abrace-card">
+            <div class="abrace-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <h5>Relatórios de Atividades</h5>
+            <p class="transparency-text">Acompanhe nossas ações, projetos concluídos e o número de pessoas impactadas por nossas iniciativas.</p>
+            <a href="#" class="btn btn-pdf mt-auto">Ver Relatórios</a>
+          </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+          <div class="abrace-card">
+            <div class="abrace-icon">
+              <i class="fas fa-chart-pie"></i>
+            </div>
+            <h5>Prestação de Contas</h5>
+            <p class="transparency-text">Veja como os recursos arrecadados são distribuídos e investidos para maximizar nosso impacto social.</p>
+            <a href="#" class="btn btn-pdf mt-auto">Ver Financeiro</a>
+          </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+          <div class="abrace-card">
+            <div class="abrace-icon">
+              <i class="fas fa-gavel"></i>
+            </div>
+            <h5>Estatuto Social</h5>
+            <p class="transparency-text">Acesse o documento oficial que rege a nossa organização, nossos objetivos e nossa estrutura de governança.</p>
+            <a href="#" class="btn btn-pdf mt-auto">Ler Estatuto</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

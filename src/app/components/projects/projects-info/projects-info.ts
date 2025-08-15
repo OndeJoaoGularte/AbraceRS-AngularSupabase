@@ -26,7 +26,14 @@ export class ProjectsInfo implements OnInit {
     if (id) {
       this.project = await this.projectsService.getProjectById(Number(id));
       if (this.project && this.project.content) {
-        this.safeHtmlContent = this.sanitizer.bypassSecurityTrustHtml(this.project.content);
+        console.log('Conteúdo vindo do Supabase:', this.project.content);
+        let dirtyHtml = this.project.content;
+        
+        const nonBreakingSpace = /&nbsp;/g;
+        
+        const cleanHtml = dirtyHtml.replace(nonBreakingSpace, ' ');
+
+        this.safeHtmlContent = this.sanitizer.bypassSecurityTrustHtml(cleanHtml);
       }
     }
     this.loading = false;

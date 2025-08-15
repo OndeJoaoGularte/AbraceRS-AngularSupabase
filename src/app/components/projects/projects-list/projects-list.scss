@@ -5,7 +5,7 @@
   margin-bottom: 2.5rem;
 
   h1 {
-    color: var(--cor-principal);
+    color: var(--cor-primaria);
     font-weight: 800;
     display: inline-block;
   }
@@ -24,14 +24,14 @@
 */
 
 .btn-group .btn {
-    border-color: var(--cor-principal);
-    color: var(--cor-principal);
+    border-color: var(--cor-primaria);
+    color: var(--cor-primaria);
     font-weight: 600;
 }
 .btn-group .btn.active {
-    background-color: var(--cor-principal);
+    background-color: var(--cor-primaria);
     color: #fff;
-    border-color: var(--cor-principal);
+    border-color: var(--cor-primaria);
 }
 .search-wrapper {
   position: relative;
@@ -65,7 +65,7 @@
   color: var(--cor-texto);
   transition: color 0.3s ease;
   &:hover {
-    color: var(--cor-principal);
+    color: var(--cor-primaria);
   }
 }
 .card-img-top {
@@ -75,7 +75,7 @@
 }
 
 .status-badge-active {
-  background-color: var(--cor-principal);
+  background-color: var(--cor-primaria);
 }
 .status-badge-inactive {
   background-color: #adb5bd;
@@ -87,10 +87,10 @@
 }
 .btn-edit {
   background-color: transparent;
-  border: 1px solid var(--cor-principal);
-  color: var(--cor-principal);
+  border: 1px solid var(--cor-primaria);
+  color: var(--cor-primaria);
   &:hover {
-    background-color: var(--cor-principal);
+    background-color: var(--cor-primaria);
     color: #fff;
   }
 }

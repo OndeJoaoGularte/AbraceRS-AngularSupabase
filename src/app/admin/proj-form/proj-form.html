@@ -36,41 +36,35 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="image_url" class="form-label">Imagem de Destaque</label>
-                    <input type="file" id="imageFile" class="form-control" (change)="onFileSelected($event)"
-                        accept="image/png, image/jpeg">
+                    <label for="imageFile" class="form-label">Imagem de Destaque</label>
+                    <input type="file" id="imageFile" class="form-control" (change)="onFileSelected($event)" accept="image/png, image/jpeg">
                 </div>
 
                 @if (imagePreview) {
-                <div class="mb-4 text-center">
-                    <p class="mb-2">Pré-visualização:</p>
-                    <img [src]="imagePreview" alt="Pré-visualização da Imagem"
-                        style="max-width: 300px; max-height: 200px; border-radius: 8px;">
-                </div>
+                    <div class="mb-4 text-center">
+                        <p class="mb-2">Pré-visualização:</p>
+                        <img [src]="imagePreview" alt="Pré-visualização da Imagem" style="max-width: 300px; max-height: 200px; border-radius: 8px;">
+                    </div>
                 }
 
                 <div class="mb-4">
                     <label class="form-label">Conteúdo Completo do Projeto</label>
-                    <div class="editor-wrapper border rounded">
-                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-                        <ngx-editor [editor]="editor" formControlName="content"></ngx-editor>
-                    </div>
+                    
+                    <p-editor formControlName="content" [style]="{'height':'320px'}"></p-editor>
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <a routerLink="/projects" class="btn btn-secondary me-2">Cancelar</a>
+                    <a routerLink="/atuamos" class="btn btn-secondary me-2">Cancelar</a>
                     <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid || isUploading">
-                        
                         @if (isUploading) {
                             <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
                             <span>Salvando...</span>
                         } @else {
                             <span>{{ isEditMode ? 'Salvar Alterações' : 'Cadastrar Projeto' }}</span>
                         }
-
                     </button>
                 </div>
-
+                
             </form>
         </div>
     </div>

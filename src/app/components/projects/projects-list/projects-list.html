@@ -3,9 +3,9 @@
   <div class="page-header">
     <h1>Nossos Projetos</h1>
     @if (authService.isLoggedIn()) {
-      <a routerLink="/admin/project/new" class="btn btn-success btn-add-project">
-        + Adicionar Novo Projeto
-      </a>
+    <a routerLink="/admin/project/new" class="btn btn-success btn-add-project">
+      + Adicionar Novo Projeto
+    </a>
     }
   </div>
 
@@ -46,52 +46,53 @@
     </div>
   </div>
   @if (loading) {
-    <div class="row">
-      @for (item of [1, 2, 3, 4]; track item) {
-        <div class="col-md-6 col-lg-3 mb-4">
-          <div class="card h-100 shadow-sm">
-            <div class="skeleton skeleton-image"></div>
-            <div class="card-body">
-              <div class="skeleton skeleton-title"></div>
-              <div class="skeleton skeleton-text"></div>
-            </div>
-          </div>
+  <div class="row">
+    @for (item of [1, 2, 3, 4]; track item) {
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="skeleton skeleton-image"></div>
+        <div class="card-body">
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-text"></div>
         </div>
-      }
+      </div>
     </div>
+    }
+  </div>
   } @else {
-    <div class="row">
-      @for (project of projects; track project.id) {
-        <div class="col-md-6 col-lg-3 mb-4">
-          <div class="card h-100 shadow-sm project-card clickable-card" (click)="showDetails(project.id)" [class.inactive-card]="!project.status">
-            <img [src]="project.image_url || 'assets/images/placeholder.png'" class="card-img-top" alt="{{ project.name }}">
-            <div class="card-body d-flex flex-column">
-              <div class="mb-2">
-                @if (project.status) {
-                  <span class="badge status-badge-active">ATIVO</span>
-                } @else {
-                  <span class="badge status-badge-inactive">INATIVO</span>
-                }
-              </div>
-              <h5 class="card-title">{{ project.name }}</h5>
-              <p class="card-text flex-grow-1">{{ project.description }}</p>
-              <p class="card-text"><small class="text-muted">Início: {{ project.start | date:'dd/MM/yyyy' }}</small></p>
-            </div>
-            @if (authService.isLoggedIn()) {
-              <div class="card-footer bg-white border-0">
-                <a [routerLink]="['/admin/project/edit', project.id]" (click)="$event.stopPropagation()" class="btn btn-edit btn-sm me-2">Editar</a>
-                <button (click)="deleteProject(project.id, $event)" class="btn btn-delete btn-sm">Deletar</button>
-              </div>
+  <div class="row">
+    @for (project of projects; track project.id) {
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card h-100 shadow-sm project-card clickable-card" (click)="showDetails(project.id)"
+        [class.inactive-card]="!project.status">
+        <img [src]="project.image_url || 'assets/images/placeholder.png'" class="card-img-top" alt="{{ project.name }}">
+        <div class="card-body d-flex flex-column">
+          <div class="mb-2">
+            @if (project.status) {
+            <span class="badge status-badge-active">ATIVO</span>
+            } @else {
+            <span class="badge status-badge-inactive">INATIVO</span>
             }
           </div>
+          <h5 class="card-title">{{ project.name }}</h5>
+          <p class="card-text flex-grow-1">{{ project.description }}</p>
         </div>
-      }
-    </div>
-    @if (projects.length === 0) {
-      <div class="text-center p-5">
-        <p class="h4 text-muted">Nenhum projeto encontrado</p>
-        <p class="text-muted">Tente ajustar seus filtros ou o termo de busca.</p>
+        @if (authService.isLoggedIn()) {
+        <div class="card-footer bg-white border-0">
+          <a [routerLink]="['/admin/project/edit', project.id]" (click)="$event.stopPropagation()"
+            class="btn btn-edit btn-sm me-2">Editar</a>
+          <button (click)="deleteProject(project.id, $event)" class="btn btn-delete btn-sm">Deletar</button>
+        </div>
+        }
       </div>
+    </div>
     }
+  </div>
+  @if (projects.length === 0) {
+  <div class="text-center p-5">
+    <p class="h4 text-muted">Nenhum projeto encontrado</p>
+    <p class="text-muted">Tente ajustar seus filtros ou o termo de busca.</p>
+  </div>
+  }
   }
 </div>

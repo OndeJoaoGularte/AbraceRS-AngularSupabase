@@ -18,7 +18,7 @@ footer {
 
 .widget-title {
   font-weight: 700;
-  color: var(--cor-principal);
+  color: var(--cor-primaria);
   margin-bottom: 1.5rem;
   font-size: 1rem;
   text-transform: uppercase;
@@ -38,7 +38,7 @@ footer {
 
     &:hover {
       opacity: 1;
-      color: var(--cor-principal);
+      color: var(--cor-primaria);
       padding-left: 5px;
     }
   }
@@ -57,7 +57,7 @@ footer {
     }
 
     i {
-        color: var(--cor-principal);
+        color: var(--cor-primaria);
         width: 20px;
         margin-right: 0.5rem;
     }
@@ -71,7 +71,7 @@ footer {
   transition: all 0.3s ease;
 
   &:hover {
-    color: var(--cor-principal);
+    color: var(--cor-primaria);
     transform: translateY(-3px);
     opacity: 1;
   }
@@ -82,7 +82,7 @@ footer {
 */
 
 .footer-bottom {
-  background-color: var(--cor-principal);
+  background-color: var(--cor-primaria);
   padding: 1.2rem 0;
   text-align: center;
 

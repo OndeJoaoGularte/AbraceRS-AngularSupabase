@@ -2,27 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Editor, NgxEditorModule, Toolbar } from 'ngx-editor';
 import { Posts } from '../../services/posts/posts';
 
 @Component({
   selector: 'app-post-form',
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, NgxEditorModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './post-form.html',
   styleUrl: './post-form.scss'
 })
-export class PostForm implements OnInit, OnDestroy {
+export class PostForm implements OnInit {
   postForm: FormGroup;
   isEditMode = false;
   postId: number | null = null;
-  editor!: Editor;
-  toolbar: Toolbar = [
-    ['bold', 'italic', 'underline'],
-    ['blockquote'],
-    [{ heading: ['h2', 'h3'] }],
-    ['ordered_list', 'bullet_list'],
-    ['link'],
-  ];
 
   selectedFile: File | null = null;
   imagePreview: string | null = null;
@@ -43,16 +35,11 @@ export class PostForm implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.editor = new Editor();
     this.postId = Number(this.route.snapshot.paramMap.get('id'));
     if (this.postId !== null && !isNaN(this.postId)) {
       this.isEditMode = true;
       this.loadPostData(this.postId);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.editor.destroy();
   }
 
   async loadPostData(id: number): Promise<void> {
@@ -86,9 +73,7 @@ export class PostForm implements OnInit, OnDestroy {
     this.isUploading = true;
     let imageUrl = this.postForm.value.image_url || '';
 
-    // 1. Faz o upload da nova imagem, se uma foi selecionada
     if (this.selectedFile) {
-      // Certifique-se que a função 'uploadpostImage' existe no seu 'posts.service.ts'
       const uploadedUrl = await this.postsService.uploadPostImage(this.selectedFile);
       if (uploadedUrl) {
         imageUrl = uploadedUrl;
@@ -99,10 +84,8 @@ export class PostForm implements OnInit, OnDestroy {
       }
     }
 
-    // 2. Prepara os dados do formulário com a URL da imagem
     const formValue = { ...this.postForm.value, image_url: imageUrl };
 
-    // 3. Salva os dados no banco
     if (this.isEditMode && this.postId) {
       await this.postsService.updatePost(this.postId, formValue);
     } else {
@@ -110,6 +93,6 @@ export class PostForm implements OnInit, OnDestroy {
     }
 
     this.isUploading = false;
-    this.router.navigate(['/posts']);
+    this.router.navigate(['/blog']);
   }
 }

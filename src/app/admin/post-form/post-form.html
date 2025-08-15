@@ -17,7 +17,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="image" class="form-label">Imagem de Destaque</label>
+          <label for="imageFile" class="form-label">Imagem de Destaque</label>
           <input type="file" id="imageFile" class="form-control" (change)="onFileSelected($event)"
             accept="image/png, image/jpeg">
         </div>
@@ -32,14 +32,14 @@
 
         <div class="mb-4">
           <label class="form-label">Conteúdo Completo da Postagem</label>
-          <div class="editor-wrapper border rounded">
-            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-            <ngx-editor [editor]="editor" formControlName="content"></ngx-editor>
-          </div>
+          
+          <!-- NOVO EDITOR p-editor DA PRIMENG -->
+          <p-editor formControlName="content" [style]="{'height':'320px'}"></p-editor>
+
         </div>
 
         <div class="d-flex justify-content-end">
-          <a routerLink="/posts" class="btn btn-secondary me-2">Cancelar</a>
+          <a routerLink="/blog" class="btn btn-secondary me-2">Cancelar</a>
           <button type="submit" class="btn btn-primary" [disabled]="postForm.invalid || isUploading">
             
             @if (isUploading) {

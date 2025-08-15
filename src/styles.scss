@@ -1,5 +1,5 @@
 :root {
-    --cor-principal: #027581;     
+    --cor-primaria: #027581;     
     --cor-secundaria: #e74c3c;   
     --cor-destaque: #F1C40F;     
     --cor-fundo: #f5f5dc;        
@@ -13,4 +13,87 @@ body {
     color: var(--cor-texto);
     background-color: var(--cor-fundo);
     overflow-x: hidden;
+}
+
+/*
+  Páginas
+*/
+
+.abrace-sectionw{
+  padding: 5rem 0;
+  background-color: #fff;
+  border-bottom: 1px solid #dddcd3;
+}
+
+.abrace-sectionc{
+  padding: 5rem 0;
+  background-color: var(--cor-fundo);
+}
+
+.abrace-title {
+  font-weight: 700;
+  color: var(--cor-texto);
+  margin-bottom: 1rem;
+}
+
+.abrace-intro {
+  padding: 4rem 0 2rem;
+}
+
+.abrace-icon {
+  font-size: 3rem;
+  color: var(--cor-secundaria);
+  margin-bottom: 0.5rem;
+}
+
+.abrace-card {
+  padding: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  text-align: center;
+  height: 100%;
+  border-bottom: 4px solid var(--cor-primaria);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  h3, h5{
+    font-weight: 700;
+    color: var(--cor-texto);
+    margin-bottom: 1rem;
+  }
+
+  p{
+    color: var(--cor-texto);
+    opacity: 0.8;
+  }
+}
+
+.abrace-card2 {
+  padding: 2rem;
+  background-color: var(--cor-fundo);
+  border-radius: 12px;
+  text-align: center;
+  height: 100%;
+  border-bottom: 4px solid var(--cor-primaria);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  h3, h5{
+    font-weight: 700;
+    color: var(--cor-texto);
+    margin-bottom: 1rem;
+  }
+
+  p{
+    color: var(--cor-texto);
+    opacity: 0.8;
+  }
 }

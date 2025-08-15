@@ -1,8 +1,14 @@
 header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-placeholder {
+  height: 85px;
 }
 
 /*
@@ -11,13 +17,13 @@ header {
 
 .top-bar {
   height: 40px;
-  background-color: var(--cor-principal);
+  background-color: var(--cor-primaria);
   color: var(--cor-texto-claro);
   display: flex;
   align-items: center;
   font-size: 0.9rem;
   font-weight: 600;
-  transition: height 1s ease-in-out, opacity 0.5s ease;
+  transition: height 0.5s ease-in-out, opacity 0.5s ease;
   overflow: hidden;
 
   .container {
@@ -104,13 +110,13 @@ nav {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--cor-principal);
+    background-color: var(--cor-primaria);
     transition: width 0.3s ease;
   }
 
   &:hover,
   &.active-link {
-    color: var(--cor-principal);
+    color: var(--cor-primaria);
   }
 
   &:hover::after,
@@ -128,7 +134,7 @@ nav {
 .nav-cta {
   background-color: var(--cor-destaque);
   color: var(--cor-texto);
-  padding: 0.6rem 1.5rem; // Padding ajustado
+  padding: 0.6rem 1.5rem;
   border-radius: 50px;
   text-decoration: none;
   font-weight: 700;
@@ -136,7 +142,7 @@ nav {
   cursor: pointer;
 
   &:hover {
-    background-color: #d4ac0d; // Tom mais escuro do amarelo
+    background-color: #d4ac0d;
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
@@ -147,8 +153,8 @@ nav {
   border: 1px solid var(--cor-secundaria);
   color: var(--cor-secundaria);
   font-weight: 700;
-  border-radius: 50px; // Deixando redondo para combinar com o CTA
-  padding: 0.6rem 1.5rem; // Padding ajustado
+  border-radius: 50px;
+  padding: 0.6rem 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -158,8 +164,6 @@ nav {
   }
 }
 
-// 3. FIX DE ALINHAMENTO
-// Garante que o line-height não interfira no alinhamento do flex
 .nav-cta,
 .btn-logout,
 .nav-link {
@@ -172,7 +176,6 @@ nav {
   cursor: pointer;
 }
 
-/* Responsividade */
 @media (max-width: 991px) {
   .top-bar {
     display: none;

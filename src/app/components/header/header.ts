@@ -23,7 +23,7 @@ export class Header implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.isScrolled = window.scrollY > 200; //barra superior some ao descer 200 pixels
+    this.isScrolled = window.scrollY > 50; //barra superior some ao descer 50 pixels
   }
 
   toggleMenu(): void {

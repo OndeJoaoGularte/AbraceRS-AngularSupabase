@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Editor, Toolbar, NgxEditorModule } from 'ngx-editor';
 import { Projects } from '../../services/projects/projects';
+import { EditorModule } from 'primeng/editor';
 
 @Component({
   selector: 'app-proj-form',
-  imports: [CommonModule, ReactiveFormsModule, NgxEditorModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, EditorModule],
   templateUrl: './proj-form.html',
   styleUrl: './proj-form.scss'
 })
@@ -15,16 +15,6 @@ export class ProjForm implements OnInit, OnDestroy {
   projectForm: FormGroup;
   isEditMode = false;
   projectId: number | null = null;
-  editor!: Editor;
-  toolbar: Toolbar = [
-    ['bold', 'italic'],
-    ['underline', 'strike'],
-    ['blockquote'],
-    ['ordered_list', 'bullet_list'],
-    [{ heading: ['h2', 'h3', 'h4'] }],
-    ['link'],
-  ];
-
   selectedFile: File | null = null;
   imagePreview: string | null = null;
   isUploading = false;
@@ -47,7 +37,6 @@ export class ProjForm implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.editor = new Editor();
     this.projectId = Number(this.route.snapshot.paramMap.get('id'));
     if (this.projectId !== null && !isNaN(this.projectId)) {
       this.isEditMode = true;
@@ -56,7 +45,6 @@ export class ProjForm implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.editor.destroy();
   }
 
   async loadProjectData(id: number): Promise<void> {

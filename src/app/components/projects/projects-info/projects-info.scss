@@ -1,0 +1,85 @@
+.project-header img{
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 1px;
+}
+
+.content-wrapper {
+  ::ng-deep img {
+    max-width: 200px;
+    height: auto;
+    margin: 1rem;
+    border-radius: 8px;
+  }
+
+  ::ng-deep h1, ::ng-deep h2 {
+    color: var(--cor-primaria);
+    margin: 1.5rem 0 0.5rem; 
+  }
+
+  ::ng-deep p,::ng-deep ul,::ng-deep ol {
+    margin: 0.5rem 0;
+  }
+}
+
+.project-title {
+  font-weight: 800;
+  color: var(--cor-secundaria);
+}
+
+.sidebar-card {
+  position: sticky; 
+  top: 120px; 
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+
+  .card-title {
+    font-weight: 700;
+    color: var(--cor-texto);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .btn-donate {
+    background-color: var(--cor-destaque);
+    color: var(--cor-texto);
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background-color: #D4AC0D; 
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+  }
+}
+
+.project-facts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+  li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.status-badge-active {
+  background-color: var(--cor-primaria);
+  height: 20.4px;
+}
+.status-badge-inactive {
+  background-color: #adb5bd;
+  height: 20.4px;
+}
