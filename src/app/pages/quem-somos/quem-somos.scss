@@ -16,8 +16,8 @@
     height: 150px;
     object-fit: cover;
     border-radius: 50%;
-    // border: 2px solid var(--cor-primaria);
-    border: 2px solid var(--cor-secundaria);
+    border: 2px solid var(--cor-primaria);
+    // border: 2px solid var(--cor-secundaria);
     margin-bottom: 1.5rem;
     transition: transform 0.3s ease;
   }
@@ -33,8 +33,8 @@
   }
 
   .team-member-role {
-    color: var(--cor-primaria);
-    // color: var(--cor-secundaria);
+    // color: var(--cor-primaria);
+    color: var(--cor-secundaria);
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.9rem;

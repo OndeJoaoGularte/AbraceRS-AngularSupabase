@@ -1,52 +1,62 @@
 :root {
-    --cor-primaria: #027581;     
-    --cor-secundaria: #e74c3c;   
-    --cor-destaque: #F1C40F;     
-    --cor-fundo: #f5f5dc;        
-    --cor-texto: #4a4a4a;        
-    --cor-texto-claro: #ffffff;   
-    --fonte-principal: 'Nunito', sans-serif;
+  --cor-primaria: #027581;
+  --cor-secundaria: #e74c3c;
+  --cor-destaque: #f1c40f;
+  --cor-fundo: #f5f5dc;
+  --cor-texto: #4a4a4a;
+  --cor-texto-claro: #ffffff;
+  --fonte-principal: "Nunito", sans-serif;
 }
 
 body {
-    font-family: var(--fonte-principal);
-    color: var(--cor-texto);
-    background-color: var(--cor-fundo);
-    overflow-x: hidden;
+  font-family: var(--fonte-principal);
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
+  overflow-x: hidden;
 }
 
 /*
-  Páginas
+  Páginas completas
 */
 
-.abrace-sectionw{
+.abrace-intro {
+  // introdução das páginas
+  padding: 4rem 0 2rem;
+}
+
+.abrace-sectionw {
+  // section com fundo branco
   padding: 5rem 0;
   background-color: #fff;
   border-bottom: 1px solid #dddcd3;
 }
 
-.abrace-sectionc{
+.abrace-sectionc {
+  // section com fundo bege
   padding: 5rem 0;
   background-color: var(--cor-fundo);
 }
 
 .abrace-title {
+  // título das seções
   font-weight: 700;
   color: var(--cor-texto);
   margin-bottom: 1rem;
 }
 
-.abrace-intro {
-  padding: 4rem 0 2rem;
-}
-
 .abrace-icon {
+  // ícones das páginas
   font-size: 3rem;
   color: var(--cor-secundaria);
   margin-bottom: 0.5rem;
 }
 
+/*
+  Cards
+*/
+
 .abrace-card {
+  // cards em seções com fundo bege
   padding: 2rem;
   background-color: white;
   border-radius: 12px;
@@ -60,19 +70,21 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   }
 
-  h3, h5{
+  h3,
+  h5 {
     font-weight: 700;
     color: var(--cor-texto);
     margin-bottom: 1rem;
   }
 
-  p{
+  p {
     color: var(--cor-texto);
     opacity: 0.8;
   }
 }
 
 .abrace-card2 {
+  // cards em seções com fundo branco
   padding: 2rem;
   background-color: var(--cor-fundo);
   border-radius: 12px;
@@ -86,14 +98,156 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   }
 
-  h3, h5{
+  h3,
+  h5 {
     font-weight: 700;
     color: var(--cor-texto);
     margin-bottom: 1rem;
   }
 
-  p{
+  p {
     color: var(--cor-texto);
     opacity: 0.8;
+  }
+}
+
+/*
+  Cards de componentes
+*/
+
+.component-cards {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .card-title {
+    color: var(--cor-texto);
+    transition: color 0.3s ease;
+    &:hover {
+      color: var(--cor-primaria);
+    }
+  }
+  .card-img-top {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .btn-edit {
+    background-color: transparent;
+    border: 1px solid var(--cor-primaria);
+    color: var(--cor-primaria);
+    &:hover {
+      background-color: var(--cor-primaria);
+      color: #fff;
+    }
+  }
+
+  .btn-delete {
+    background-color: transparent;
+    border: 1px solid var(--cor-secundaria);
+    color: var(--cor-secundaria);
+    &:hover {
+      background-color: var(--cor-secundaria);
+      color: #fff;
+    }
+  }
+}
+
+/*
+  Componentes de Listas
+*/
+
+.component-header {
+  position: relative;
+  text-align: center;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+
+  h1 {
+    color: var(--cor-secundaria);
+    font-weight: 800;
+    display: inline-block;
+  }
+
+  .btn-add {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.search-wrapper {
+  position: relative;
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    color: #aaa;
+    z-index: 3;
+  }
+  .form-control {
+    padding-left: 2.5rem;
+  }
+}
+
+/*
+  Loading
+*/
+
+.loading {
+  .skeleton {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  .skeleton-image {
+    height: 200px;
+    background-color: #e0e0e0;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  .skeleton-title {
+    width: 70%;
+    height: 24px;
+    margin-bottom: 1rem;
+  }
+
+  .skeleton-text {
+    width: 100%;
+    height: 16px;
+    margin-bottom: 0.5rem;
+    &.short {
+      width: 50%;
+    }
+  }
+
+  .skeleton-button {
+    width: 120px;
+    height: 31px;
+    margin-left: auto;
+  }
+  
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 }

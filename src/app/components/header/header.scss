@@ -5,6 +5,7 @@ header {
   right: 0;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--cor-primaria);
 }
 
 .header-placeholder {
@@ -110,13 +111,13 @@ nav {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--cor-primaria);
+    background-color: var(--cor-secundaria);
     transition: width 0.3s ease;
   }
 
   &:hover,
   &.active-link {
-    color: var(--cor-primaria);
+    color: var(--cor-secundaria);
   }
 
   &:hover::after,
