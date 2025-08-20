@@ -1,12 +1,59 @@
-<div class="container">
-  <h1>Como Atuamos</h1>
-  <p>Nossa atuação se dá por meio de diversos projetos inovadores que visam transformar a comunidade. Conheça alguns deles abaixo:</p>
-  <hr>
+<div class="blog-page">
 
-  <app-posts-list></app-posts-list>
+  <section class="abrace-intro text-center">
+    <div class="container">
+      <h1 class="abrace-title">Blog</h1>
+      <p class="lead text-muted">Notícias, histórias e atualizações sobre o trabalho e o impacto do Instituto AbraceRS.
+      </p>
+    </div>
+  </section>
 
-  <div class="outra-secao">
-      <h2>Nossos Valores</h2>
-      <p>Compromisso, inovação e impacto social.</p>
-  </div>
+  <section class="abrace-sectionw">
+    <div class="container">
+      @if (loading) {
+      <p>Carregando...</p>
+      } @else if (featuredPost) {
+      <div class="featured-post-card">
+        <div class="row g-0">
+          <div class="col-lg-7">
+            <img [src]="featuredPost.image_url || 'assets/images/placeholder.png'" class="featured-image"
+              alt="{{ featuredPost.title }}">
+          </div>
+          <div class="col-lg-5 d-flex align-items-center">
+            <div class="card-body p-4 p-lg-5">
+              <p class="badge featured-badge mb-3">Última Postagem</p>
+              <h2 class="abrace-title mb-3">{{ featuredPost.title }}</h2>
+              <p class="card-text text-muted">{{ featuredPost.summary }}</p>
+              <p class="card-text text-muted mt-3">
+                <small>Publicado em: {{ featuredPost.publish | date:'dd/MM/yyyy' }}</small>
+                @if (featuredPost.updated) {
+                <small> | Última edição às {{ featuredPost.updated | date:'HH:mm' }} do dia {{ featuredPost.updated | date:'dd/MM/yyyy'
+                  }}</small>
+                }
+              </p>
+              <a [routerLink]="['/blog', featuredPost.id]" class="btn btn-success mt-4 align-self-start">Continuar
+                Lendo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </section>
+
+  <section class="cta-section text-center">
+    <div class="container">
+      <h2 class="cta-title">Confira nossas Postagens</h2>
+      <p class="cta-text">Abaixo você pode conferir notícias, histórias e atualizações quanto ao nosso trabalho.</p>
+
+      <div class="arrow-indicator">
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </section>
+
+  <section class="posts-list-section">
+    <app-posts-list></app-posts-list>
+  </section>
+
 </div>
