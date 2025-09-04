@@ -118,4 +118,20 @@ export class Projects {
       return null;
     }
   }
+
+  /*
+    Projetos de destaque para a Home
+  */
+
+  async getLatestProjects(limit: number = 3) {
+  const { data, error } = await this.supabaseService.client
+    .from('projects')
+    .select('*')
+    .eq('status', true)
+    .order('start', { ascending: false })
+    .limit(limit);
+
+  if (error) console.error('Erro ao buscar últimos projetos:', error);
+  return data || [];
+}
 }

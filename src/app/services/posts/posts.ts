@@ -95,4 +95,19 @@ export class Posts {
       return null;
     }
   }
+
+  /*
+    Destaque para a Home
+  */
+
+  async getLatestPosts(limit: number = 3) {
+    const { data, error } = await this.supabaseService.client
+      .from('posts')
+      .select('*')
+      .order('publish', { ascending: false })
+      .limit(limit);
+
+    if (error) console.error('Erro ao buscar últimos posts:', error);
+    return data || [];
+  }
 }
