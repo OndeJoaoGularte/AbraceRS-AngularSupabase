@@ -97,17 +97,23 @@ export class Posts {
   }
 
   /*
-    Destaque para a Home
+    Posts para a Home
   */
 
-  async getLatestPosts(limit: number = 3) {
-    const { data, error } = await this.supabaseService.client
-      .from('posts')
-      .select('*')
-      .order('publish', { ascending: false })
-      .limit(limit);
+  async getPaginatedPosts(page: number, limit: number) {
+    const from = page * limit;
+    const to = from + limit - 1;
 
-    if (error) console.error('Erro ao buscar últimos posts:', error);
-    return data || [];
+    const { data, error, count } = await this.supabaseService.client
+      .from('posts')
+      .select('*', { count: 'exact' })
+      .order('publish', { ascending: false })
+      .range(from, to);
+
+    if (error) {
+      console.error('Erro ao buscar posts paginados:', error);
+      return { data: [], count: 0 };
+    }
+    return { data: data || [], count: count || 0 };
   }
 }

@@ -98,11 +98,14 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  gap: 2rem;
 
   .supporter-logo img {
-    max-height: 50px;
-    filter: grayscale(100%);
+    width: 100px;
+    height: 100px;
+    margin: 0.75rem;
+    border-radius: 12px;
+    filter: grayscale(10%);
     opacity: 0.6;
     transition: all 0.3s ease;
     &:hover {
@@ -112,7 +115,12 @@
   }
 
   &.master .supporter-logo img {
-    max-height: 80px;
+    width: 150px;
+    height: 150px;
+  }
+
+  .supporter-link {
+    text-decoration: none;
   }
 }
 

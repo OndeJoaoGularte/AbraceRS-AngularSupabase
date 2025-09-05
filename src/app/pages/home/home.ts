@@ -19,20 +19,23 @@ export class Home implements OnInit {
   featuredProject: any = null;
   secondaryProjects: any[] = [];
 
-  // Propriedades para o blog
-  latestPosts: any[] = [];
-
   // Placeholders para os logos dos apoiadores
   masterSupporters = [
-    { name: 'Apoiador Master 1', logo: 'https://placehold.co/250x100/CCCCCC/4a4a4a?text=Apoiador+Master' },
-    { name: 'Apoiador Master 2', logo: 'https://placehold.co/250x100/CCCCCC/4a4a4a?text=Grande+Parceiro' }
+    { name: 'Nau Live Spaces', logo: 'assets/images/home/nau.jpg', linkUrl: 'https://nau.com.br/' },
+    { name: 'Vakinha', logo: 'assets/images/home/vakinha.jpg', linkUrl: 'https://www.vakinha.com.br/' }
   ];
   supporters = [
-    { name: 'Apoiador 1', logo: 'https://placehold.co/150x80/CCCCCC/999999?text=Apoiador' },
-    { name: 'Apoiador 2', logo: 'https://placehold.co/150x80/CCCCCC/999999?text=Apoiador' },
-    { name: 'Apoiador 3', logo: 'https://placehold.co/150x80/CCCCCC/999999?text=Apoiador' },
-    { name: 'Apoiador 4', logo: 'https://placehold.co/150x80/CCCCCC/999999?text=Apoiador' }
+    { name: 'Campo Minado RS', logo: 'assets/images/home/campominado.png', linkUrl: 'https://www.instagram.com/campominado_rs/' },
+    { name: 'Elitte Reformas', logo: 'assets/images/home/elittereformas.jpg', linkUrl: 'https://www.instagram.com/elitte__reformas/' },
+    { name: 'Feminina RS', logo: 'assets/images/home/feminina.jpg', linkUrl: 'https://www.instagram.com/femininars/' }
   ];
+
+  // Propriedades para o blog
+  latestPosts: any[] = [];
+  private currentPage = 0;
+  private postsPerPage = 3;
+  totalPosts = 0;
+  allPostsLoaded = false;
 
   constructor(
     private projectsService: Projects,
@@ -40,24 +43,39 @@ export class Home implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadHomePageData();
+    this.loadInitialData();
   }
 
-  async loadHomePageData(): Promise<void> {
+  async loadInitialData(): Promise<void> {
     this.loading = true;
+    const projects = await this.projectsService.getLatestProjects(3);
     
-    const [projects, posts] = await Promise.all([
-      this.projectsService.getLatestProjects(3),
-      this.postsService.getLatestPosts(3)
-    ]);
+    await this.loadMorePosts(); 
 
     if (projects && projects.length > 0) {
       this.featuredProject = projects[0];
       this.secondaryProjects = projects.slice(1);
     }
-
-    this.latestPosts = posts;
-    
     this.loading = false;
   }
+
+  // Carregamento de novos Posts
+  async loadMorePosts(): Promise<void> {
+    const { data, count } = await this.postsService.getPaginatedPosts(
+      this.currentPage,
+      this.postsPerPage
+    );
+
+    this.latestPosts.push(...data);
+    this.totalPosts = count;
+
+    this.currentPage++;
+
+    if (this.latestPosts.length >= this.totalPosts) {
+      this.allPostsLoaded = true;
+    }
+  }
 }
+
+
+  

@@ -15,7 +15,7 @@
 
     <section class="breakout-text-section abrace-sectionc">
         <div class="container text-center">
-            <h2 class="breakout"> <strong>Nós, do Instituto Abrace</strong></h2>
+            <h2 class="breakout"> <strong>Nós,<br> do Instituto Abrace</strong></h2>
         </div>
     </section>
 
@@ -116,14 +116,22 @@
             <h4 class="supporters-tier-title">Apoiadores Master</h4>
             <div class="supporters-grid master">
                 @for(supporter of masterSupporters; track supporter.name) {
-                <div class="supporter-logo"><img [src]="supporter.logo" alt="{{ supporter.name }}"></div>
+                    <a [href]="supporter.linkUrl" target="_blank" class="supporter-link" title="Visitar o site de {{ supporter.name }}">
+                        <div class="supporter-logo">
+                            <img [src]="supporter.logo" alt="{{ supporter.name }}">
+                        </div>
+                    </a>
                 }
             </div>
             <hr class="my-5">
             <h4 class="supporters-tier-title">Apoiadores</h4>
             <div class="supporters-grid">
                 @for(supporter of supporters; track supporter.name) {
-                <div class="supporter-logo"><img [src]="supporter.logo" alt="{{ supporter.name }}"></div>
+                    <a [href]="supporter.linkUrl" target="_blank" class="supporter-link" title="Visitar o Instagram de {{ supporter.name }}">
+                        <div class="supporter-logo">
+                            <img [src]="supporter.logo" alt="{{ supporter.name }}">
+                        </div>
+                    </a>
                 }
             </div>
         </div>
@@ -193,15 +201,23 @@
             </div>
             <div class="row g-4">
                 @for (post of latestPosts; track post.id) {
-                <div class="col-lg-4">
-                    <a [routerLink]="['/post', post.id]" class="card component-cards">
-                        <img [src]="post.image_url" class="card-img-top" alt="{{ post.title }}">
-                        <div class="card-body">
-                            <p class="card-meta">{{ post.publish | date:'dd/MM/yyyy' }}</p>
-                            <h5 class="card-title">{{ post.title }}</h5>
-                        </div>
-                    </a>
-                </div>
+                    <div class="col-lg-4 col-md-6">
+                        <a [routerLink]="['/post', post.id]" class="card post-card h-100">
+                            <img [src]="post.image_url" class="card-img-top" alt="{{ post.title }}">
+                            <div class="card-body">
+                                <p class="card-meta">{{ post.publish_date | date:'dd/MM/yyyy' }}</p>
+                                <h5 class="card-title">{{ post.title }}</h5>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+
+            <div class="text-center mt-5">
+                @if (!allPostsLoaded) {
+                    <button (click)="loadMorePosts()" class="btn btn-outline-primary btn-lg">
+                    Carregar Mais Postagens
+                    </button>
                 }
             </div>
         </div>
