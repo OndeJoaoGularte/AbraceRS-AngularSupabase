@@ -1,1 +1,215 @@
-<p>home works!</p>
+<div class="home-page">
+    <section class="hero-section"
+        [style.background-image]="'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(' + heroImageUrl + ')'">
+        <div class="container hero-content text-center text-white">
+            <h1 class="display-4 fw-bold">
+                O Rio Grande do Sul precisa de nós
+            </h1>
+            <p class="lead my-4">
+                Sua doação transforma vidas e reconstrói esperanças.<br>Junte-se ao Instituto AbraceRS.
+            </p>
+            <a href="https://www.vakinha.com.br/vaquinha/sos-chuvas-rs-2025" target="_blank"
+                class="btn btn-cta-principal btn-lg fw-bold">Quero ajudar agora</a>
+        </div>
+    </section>
+
+    <section class="breakout-text-section abrace-sectionc">
+        <div class="container text-center">
+            <h2 class="breakout"> <strong>Nós, do Instituto Abrace</strong></h2>
+        </div>
+    </section>
+
+    <section class="about-section abrace-sectionc">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <img src="assets/images/quemsomos/instituto.jpg" class="img-fluid rounded shadow-lg"
+                        alt="Voluntários do Instituto AbraceRS">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="abrace-title">Nascemos da solidariedade em meio ao caos.</h2>
+                    <p class="text-muted">O Instituto AbraceRS foi fundado em maio de 2024 como resposta direta à
+                        catástrofe das enchentes. O que começou como um grupo de voluntários hoje é um movimento
+                        organizado para levar ajuda onde ela mais demora a chegar.</p>
+                    <a routerLink="/somos" class="btn btn-outline-primary mt-3">Conheça nossa história</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-projects-section abrace-sectionw">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="abrace-title">Buscamos meios para a reconstrução.</h2>
+                <p class="lead text-muted mb-5">Acompanhe nossas iniciativa que estão, neste momento, reconstruindo
+                    o futuro.</p>
+            </div>
+
+            @if (featuredProject) {
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="row align-items-end g-4">
+
+                        @if (secondaryProjects[0]) {
+                        <div class="col-lg-3 col-md-6 order-lg-1">
+                            <a [routerLink]="['/project', secondaryProjects[0].id]" class="card secondary-card">
+                                <img [src]="secondaryProjects[0].image_url" class="card-img-top"
+                                    alt="{{ secondaryProjects[0].name }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ secondaryProjects[0].name }}</h5>
+                                    <p class="card-text">{{ secondaryProjects[0].description }}</p>
+                                </div>
+                            </a>
+                        </div>
+                        }
+
+                        <div class="col-lg-6 col-md-12 order-first order-lg-2">
+                            <a [routerLink]="['/project', featuredProject.id]" class="card featured-card">
+                                <img [src]="featuredProject.image_url" class="card-img-top"
+                                    alt="{{ featuredProject.name }}">
+                                <div class="card-body">
+                                    <span class="badge bg-primary mb-2">Em Destaque</span>
+                                    <h3 class="card-title">{{ featuredProject.name }}</h3>
+                                    <p class="card-text">{{ featuredProject.description }}</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        @if (secondaryProjects[1]) {
+                        <div class="col-lg-3 col-md-6 order-lg-3">
+                            <a [routerLink]="['/project', secondaryProjects[1].id]" class="card secondary-card">
+                                <img [src]="secondaryProjects[1].image_url" class="card-img-top"
+                                    alt="{{ secondaryProjects[1].name }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ secondaryProjects[1].name }}</h5>
+                                    <p class="card-text">{{ secondaryProjects[1].description }}</p>
+                                </div>
+                            </a>
+                        </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </section>
+
+    <section class="associate-section abrace-sectionc">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="abrace-title">Precisamos do seu apoio.</h2>
+                    <p class="text-muted">pagina de associação</p>
+                    <a routerLink="/somos" class="btn btn-outline-primary mt-3">Conheça nossa história</a>
+                </div>
+                <div class="col-lg-6">
+                    <img src="assets/images/quemsomos/instituto.jpg" class="img-fluid rounded shadow-lg"
+                        alt="Voluntários do Instituto AbraceRS">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="supporters-section text-center abrace-sectionw">
+        <div class="container">
+            <h4 class="supporters-tier-title">Apoiadores Master</h4>
+            <div class="supporters-grid master">
+                @for(supporter of masterSupporters; track supporter.name) {
+                <div class="supporter-logo"><img [src]="supporter.logo" alt="{{ supporter.name }}"></div>
+                }
+            </div>
+            <hr class="my-5">
+            <h4 class="supporters-tier-title">Apoiadores</h4>
+            <div class="supporters-grid">
+                @for(supporter of supporters; track supporter.name) {
+                <div class="supporter-logo"><img [src]="supporter.logo" alt="{{ supporter.name }}"></div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <div class="container text-center">
+            <p class="quote-text">"Cada doação, cada voluntário, cada gesto de apoio se transforma em um abraço de
+                esperança para quem perdeu tudo."</p>
+        </div>
+    </section>
+
+    <section class="breakout-text-section abrace-sectionw">
+        <div class="container text-center">
+            <p class="breakout">A reconstrução é uma maratona, não uma corrida. <br> <strong>Nos ajude a continuar ajudando</strong> <br> e faça parte desta jornada.</p>
+        </div>
+    </section>
+
+    <section class="donate-section abrace-sectionw text-center">
+        <div class="container">
+            <div class="row justify-content-center g-4">
+                <div class="col-lg-6 col-md-8">
+                    <div class="abrace-card2">
+                        <div class="abrace-icon">
+                            <i class="fab fa-pix"></i>
+                        </div>
+                        <h3 class="fw-bold">Doe via PIX</h3>
+                        <img src="assets/images/home/qrcode.jpg" class="img-fluid my-3 card-img"
+                            alt="QR Code para Doação via PIX">
+                        <p class="mb-2">Chave PIX (E-mail):</p>
+                        <div class="pix-key p-2 rounded mb-3">
+                            <strong>doeparaobrace@gmail.com</strong>
+                        </div>
+                        <hr>
+                        <p class="mt-3 mb-1">Ou, se preferir, use nossos dados bancários:</p>
+                        <p class="text-muted small">
+                            Banco: 748 | Agência: 0116 | Conta: 59673-7<br>
+                            INSTITUTO ABRACE RS | CNPJ: 57.009.579/0001-70
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-8">
+                    <div class="abrace-card2">
+                        <div class="abrace-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3 class="fw-bold">Campanha no Vakinha</h3>
+                        <img src="assets/images/home/vakinha.jpg" class="img-fluid my-4 card-img" alt="Logo do Vakinha">
+                        <p>Contribua também através da nossa campanha online, uma forma segura e transparente de doar.
+                        </p>
+                        <a href="https://www.vakinha.com.br/5580617" target="_blank"
+                            class="btn btn-success btn-lg fw-bold mt-auto">
+                            Acessar Campanha
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="latest-posts-section abrace-sectionc">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="abrace-title">Fique por dentro das nossas atualizações!</h2>
+            </div>
+            <div class="row g-4">
+                @for (post of latestPosts; track post.id) {
+                <div class="col-lg-4">
+                    <a [routerLink]="['/post', post.id]" class="card component-cards">
+                        <img [src]="post.image_url" class="card-img-top" alt="{{ post.title }}">
+                        <div class="card-body">
+                            <p class="card-meta">{{ post.publish | date:'dd/MM/yyyy' }}</p>
+                            <h5 class="card-title">{{ post.title }}</h5>
+                        </div>
+                    </a>
+                </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="breakout-text-section abrace-sectionc">
+        <div class="container text-center">
+            <h2 class="breakout"> <strong>Instituto Abrace RS, <br> o povo pelo povo.</strong></h2>
+        </div>
+    </section>
+</div>
