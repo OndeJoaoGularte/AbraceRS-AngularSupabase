@@ -23,16 +23,6 @@
   }
 }
 
-.btn-outline-primary {
-  color: var(--cor-primaria);
-  border-color: var(--cor-primaria);
-  font-weight: 600;
-  &:hover {
-    background-color: var(--cor-primaria);
-    color: #fff;
-  }
-}
-
 .card {
   text-decoration: none;
   border-top: 4px solid var(--cor-primaria);

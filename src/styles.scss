@@ -16,6 +16,32 @@ body {
 }
 
 /*
+  Botões
+*/
+
+.btn-primary {
+  background-color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+  color: var(--cor-texto-claro); 
+
+  &:hover {
+    background-color: #015C65;
+  border-color: #015C65;
+  color: var(--cor-texto-claro)
+  }
+}
+
+.btn-outline-primary {
+  color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+  font-weight: 600;
+  &:hover {
+    background-color: var(--cor-primaria);
+    color: #fff;
+  }
+}
+
+/*
   Páginas completas
 */
 
