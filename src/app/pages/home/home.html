@@ -96,20 +96,44 @@
     </section>
 
     <section class="associate-section abrace-sectionc">
-        <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-6">
-                    <h2 class="abrace-title">Precisamos do seu apoio.</h2>
-                    <p class="text-muted">pagina de associação</p>
-                    <a routerLink="/somos" class="btn btn-outline-primary mt-3">Conheça nossa história</a>
-                </div>
-                <div class="col-lg-6">
-                    <img src="assets/images/quemsomos/instituto.jpg" class="img-fluid rounded shadow-lg"
-                        alt="Voluntários do Instituto AbraceRS">
-                </div>
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      
+      <div class="col-lg-6">
+        <h2 class="abrace-title">Precisamos do seu apoio.</h2>
+        <p class="text-muted">Sua ajuda é o que nos move. Seja contribuindo como associado(a) para fortalecer nossa estrutura ou doando seu tempo como voluntário(a) na linha de frente, você é parte fundamental da reconstrução. Escolha como quer abraçar essa causa conosco.</p>
+        <a routerLink="/junte" class="btn btn-outline-primary mt-3">Ver todas as opções</a>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="d-flex flex-column gap-4">
+          
+          <a routerLink="/junte" [queryParams]="{ form: 'associate' }" class="card selection-card">
+            <div class="card-body d-flex align-items-center">
+              <div class="abrace-icon me-4"><i class="fas fa-users"></i></div>
+              <div>
+                <h5 class="card-title mb-1">Quero me Associar</h5>
+                <p class="card-text text-muted mb-0">Fortaleça nossa causa de forma contínua.</p>
+              </div>
             </div>
+          </a>
+
+          <a routerLink="/junte" [queryParams]="{ form: 'volunteer' }" class="card selection-card">
+            <div class="card-body d-flex align-items-center">
+              <div class="abrace-icon me-4"><i class="fas fa-hands-helping"></i></div>
+              <div>
+                <h5 class="card-title mb-1">Quero ser Voluntário(a)</h5>
+                <p class="card-text text-muted mb-0">Doe seu tempo e suas habilidades na linha de frente.</p>
+              </div>
+            </div>
+          </a>
+
         </div>
-    </section>
+      </div>
+
+    </div>
+  </div>
+</section>
 
     <section class="supporters-section text-center abrace-sectionw">
         <div class="container">
