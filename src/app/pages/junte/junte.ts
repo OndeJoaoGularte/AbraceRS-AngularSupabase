@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Membership } from '../../services/membership/membership';
 
 @Component({
@@ -21,7 +21,8 @@ export class Junte implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private membershipService: Membership
+    private membershipService: Membership,
+    private route: ActivatedRoute
   ) {
     this.associateForm = this.fb.group({
       person_type: ['PESSOA_FISICA', Validators.required],
@@ -44,6 +45,14 @@ export class Junte implements OnInit {
   ngOnInit(): void {
     this.associateForm.get('person_type')?.valueChanges.subscribe(type => {
       this.onPersonTypeChange(type);
+    });
+
+    this.route.queryParams.subscribe(params => {
+      const formType = params['form']; 
+      
+      if (formType === 'associate' || formType === 'volunteer') {
+        this.showForm(formType);
+      }
     });
   }
   
