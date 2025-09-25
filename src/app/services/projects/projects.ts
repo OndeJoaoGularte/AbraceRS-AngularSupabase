@@ -128,7 +128,7 @@ export class Projects {
     .from('projects')
     .select('*')
     .eq('status', true)
-    .order('start', { ascending: false })
+    .order('updated', { ascending: false })
     .limit(limit);
 
   if (error) console.error('Erro ao buscar últimos projetos:', error);
