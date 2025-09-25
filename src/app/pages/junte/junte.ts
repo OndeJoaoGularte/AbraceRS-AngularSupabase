@@ -11,33 +11,48 @@ import { Membership } from '../../services/membership/membership';
   styleUrl: './junte.scss'
 })
 export class Junte implements OnInit {
-  membershipForm: FormGroup;
+  activeForm: 'associate' | 'volunteer' | null = null;
   isSubmitting = false;
   submittedSuccessfully: boolean | null = null;
+  submittedFormType: string = '';
+
+  associateForm: FormGroup;
+  volunteerForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private membershipService: Membership
   ) {
-    this.membershipForm = this.fb.group({
-      submission_type: ['PESSOA_FISICA', Validators.required],
+    this.associateForm = this.fb.group({
+      person_type: ['PESSOA_FISICA', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
-      document: [''],
+      document: ['', Validators.required],
       contact_person: [''],
-      how_to_help: ['']
+    });
+
+    this.volunteerForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      cpf: ['', Validators.required],
+      how_to_help: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.membershipForm.get('submission_type')?.valueChanges.subscribe(type => {
-      this.onSubmissionTypeChange(type);
+    this.associateForm.get('person_type')?.valueChanges.subscribe(type => {
+      this.onPersonTypeChange(type);
     });
   }
+  
+  showForm(type: 'associate' | 'volunteer') {
+    this.activeForm = type;
+  }
 
-  onSubmissionTypeChange(type: string): void {
-    const contactPersonControl = this.membershipForm.get('contact_person');
+  onPersonTypeChange(type: string): void {
+    const contactPersonControl = this.associateForm.get('contact_person');
     if (type === 'PESSOA_JURIDICA') {
       contactPersonControl?.setValidators([Validators.required]);
     } else {
@@ -47,26 +62,37 @@ export class Junte implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    if (this.membershipForm.invalid) {
-      this.membershipForm.markAllAsTouched();
+    const form = this.activeForm === 'associate' ? this.associateForm : this.volunteerForm;
+    if (form.invalid) {
+      form.markAllAsTouched();
       return;
     }
 
     this.isSubmitting = true;
-    const result = await this.membershipService.submitForm(this.membershipForm.value);
-    
-    if (result.success) {
-      this.submittedSuccessfully = true;
+    let result;
+
+    if (this.activeForm === 'associate') {
+      this.submittedFormType = 'de associação';
+      result = await this.membershipService.submitAssociateForm(form.value);
     } else {
-      this.submittedSuccessfully = false;
-      alert('Ocorreu um erro ao enviar seu formulário. Tente novamente.');
+      this.submittedFormType = 'de voluntariado';
+      result = await this.membershipService.submitVolunteerForm(form.value);
+    }
+    
+    this.submittedSuccessfully = result.success;
+    if (!result.success) {
+      alert(`Ocorreu um erro ao enviar seu formulário ${this.submittedFormType}. Tente novamente.`);
     }
 
     this.isSubmitting = false;
   }
 
-  isInvalid(controlName: string): boolean {
-    const control = this.membershipForm.get(controlName);
+  isAssociateInvalid(controlName: string): boolean {
+    const control = this.associateForm.get(controlName);
+    return !!control && control.invalid && (control.dirty || control.touched);
+  }
+  isVolunteerInvalid(controlName: string): boolean {
+    const control = this.volunteerForm.get(controlName);
     return !!control && control.invalid && (control.dirty || control.touched);
   }
 }

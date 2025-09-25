@@ -1,93 +1,145 @@
 <section class="abrace-intro text-center">
   <div class="container">
     <h1 class="abrace-title">Junte-se a Nós</h1>
-    <p class="lead text-muted">Seja um associado e faça parte da força que reconstrói o Rio Grande do Sul.</p>
+    <p class="lead text-muted">Sua ajuda é fundamental. Escolha como você quer fazer parte da força que reconstrói o Rio Grande do Sul.</p>
   </div>
 </section>
 
 <section class="abrace-sectionw">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-8">
+      <div class="col-lg-10">
 
-        @if (submittedSuccessfully === null) {
+        @if (activeForm === null && submittedSuccessfully === null) {
+          <div class="row g-4">
+            <div class="col-md-6">
+              <div class="selection-card h-100" (click)="showForm('associate')">
+                <div class="abrace-icon"><i class="fas fa-users"></i></div>
+                <h3 class="abrace-title">Quero me Associar</h3>
+                <p class="text-muted">Faça parte oficialmente do nosso quadro de membros, como pessoa física ou empresa, e ajude a fortalecer nossa causa de forma contínua.</p>
+                <span class="btn btn-primary mt-auto">Preencher Cadastro</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="selection-card h-100" (click)="showForm('volunteer')">
+                <div class="abrace-icon"><i class="fas fa-hands-helping"></i></div>
+                <h3 class="abrace-title">Quero ser Voluntário(a)</h3>
+                <p class="text-muted">Doe seu tempo e suas habilidades. Junte-se à nossa equipe na linha de frente e faça a diferença diretamente na vida das pessoas.</p>
+                <span class="btn btn-primary mt-auto">Preencher Cadastro</span>
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (activeForm === 'associate' && submittedSuccessfully === null) {
           <div class="card shadow-sm">
             <div class="card-body p-4 p-md-5">
-              <form [formGroup]="membershipForm" (ngSubmit)="onSubmit()" novalidate>
+              <h3 class="abrace-title text-center mb-4">Cadastro de Associado</h3>
+              <form [formGroup]="associateForm" (ngSubmit)="onSubmit()" novalidate>
                 <div class="mb-4">
                   <label class="form-label fw-bold">Quero me associar como:</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="pf" value="PESSOA_FISICA" formControlName="submission_type">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="pf" value="PESSOA_FISICA" formControlName="person_type">
                     <label class="form-check-label" for="pf">Pessoa Física</label>
                   </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" id="pj" value="PESSOA_JURIDICA" formControlName="submission_type">
-                    <label class="form-check-label" for="pj">Pessoa Jurídica (Empresa)</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="pj" value="PESSOA_JURIDICA" formControlName="person_type">
+                    <label class="form-check-label" for="pj">Pessoa Jurídica</label>
                   </div>
                 </div>
-
                 <div class="mb-3">
-                  <label for="name" class="form-label">{{ membershipForm.get('submission_type')?.value === 'PESSOA_FISICA' ? 'Nome Completo' : 'Razão Social' }}</label>
-                  <input type="text" id="name" class="form-control" formControlName="name">
-                  @if(isInvalid('name')) { <div class="text-danger small mt-1">O nome é obrigatório.</div> }
+                  <label for="assoc_name" class="form-label">{{ associateForm.get('person_type')?.value === 'PESSOA_FISICA' ? 'Nome Completo' : 'Razão Social' }}</label>
+                  <input type="text" id="assoc_name" class="form-control" formControlName="name">
+                  @if(isAssociateInvalid('name')) { <div class="text-danger small mt-1">Este campo é obrigatório.</div> }
                 </div>
-
-                @if (membershipForm.get('submission_type')?.value === 'PESSOA_JURIDICA') {
+                @if (associateForm.get('person_type')?.value === 'PESSOA_JURIDICA') {
                   <div class="mb-3">
                     <label for="contact_person" class="form-label">Nome do Contato na Empresa</label>
                     <input type="text" id="contact_person" class="form-control" formControlName="contact_person">
-                    @if(isInvalid('contact_person')) { <div class="text-danger small mt-1">O nome do contato é obrigatório.</div> }
+                    @if(isAssociateInvalid('contact_person')) { <div class="text-danger small mt-1">O nome do contato é obrigatório.</div> }
                   </div>
                 }
-
                 <div class="mb-3">
-                  <label for="document" class="form-label">{{ membershipForm.get('submission_type')?.value === 'PESSOA_FISICA' ? 'CPF' : 'CNPJ' }} (Opcional)</label>
+                  <label for="document" class="form-label">{{ associateForm.get('person_type')?.value === 'PESSOA_FISICA' ? 'CPF' : 'CNPJ' }}</label>
                   <input type="text" id="document" class="form-control" formControlName="document">
+                  @if(isAssociateInvalid('document')) { <div class="text-danger small mt-1">O documento é obrigatório.</div> }
                 </div>
-                
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <label for="email" class="form-label">E-mail</label>
-                    <input type="email" id="email" class="form-control" formControlName="email">
-                    @if(isInvalid('email')) { <div class="text-danger small mt-1">Por favor, insira um e-mail válido.</div> }
+                    <label for="assoc_email" class="form-label">E-mail</label>
+                    <input type="email" id="assoc_email" class="form-control" formControlName="email">
+                    @if(isAssociateInvalid('email')) { <div class="text-danger small mt-1">Por favor, insira um e-mail válido.</div> }
                   </div>
                   <div class="col-md-6 mb-3">
-                    <label for="phone" class="form-label">Telefone / WhatsApp</label>
-                    <input type="tel" id="phone" class="form-control" formControlName="phone">
-                    @if(isInvalid('phone')) { <div class="text-danger small mt-1">O telefone é obrigatório.</div> }
+                    <label for="assoc_phone" class="form-label">Telefone / WhatsApp</label>
+                    <input type="tel" id="assoc_phone" class="form-control" formControlName="phone">
+                    @if(isAssociateInvalid('phone')) { <div class="text-danger small mt-1">O telefone é obrigatório.</div> }
                   </div>
                 </div>
-
-                <div class="mb-4">
-                  <label for="how_to_help" class="form-label">De que forma você ou sua empresa gostariam de ajudar?</label>
-                  <textarea id="how_to_help" class="form-control" formControlName="how_to_help" rows="4" placeholder="Ex: Doações, voluntariado, divulgação, etc..."></textarea>
-                </div>
-
-                <div class="d-grid">
+                <div class="d-flex justify-content-end align-items-center mt-4">
+                  <button type="button" class="btn btn-link me-3" (click)="activeForm = null">Voltar</button>
                   <button type="submit" class="btn btn-primary btn-lg" [disabled]="isSubmitting">
-                    @if (isSubmitting) {
-                      <span class="spinner-border spinner-border-sm"></span>
-                      <span>Enviando...</span>
-                    } @else {
-                      <span>Enviar Cadastro</span>
-                    }
+                    @if(isSubmitting) { <span>Enviando...</span> } @else { <span>Enviar Cadastro</span> }
                   </button>
                 </div>
               </form>
             </div>
           </div>
-        } @else if (submittedSuccessfully) {
-          <div class="text-center p-5">
-            <div class="abrace-icon mb-3"><i class="fas fa-check-circle text-success"></i></div>
-            <h3 class="abrace-title">Obrigado!</h3>
-            <p class="lead">Seu formulário de associação foi enviado com sucesso. Entraremos em contato em breve!</p>
-            <a routerLink="/" class="btn btn-outline-primary mt-3">Voltar para a Home</a>
+        }
+
+        @if (activeForm === 'volunteer' && submittedSuccessfully === null) {
+          <div class="card shadow-sm">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="abrace-title text-center mb-4">Cadastro de Voluntário</h3>
+              <form [formGroup]="volunteerForm" (ngSubmit)="onSubmit()" novalidate>
+                <div class="mb-3">
+                  <label for="volunteer_name" class="form-label">Nome Completo</label>
+                  <input type="text" id="volunteer_name" class="form-control" formControlName="name">
+                  @if(isVolunteerInvalid('name')) { <div class="text-danger small mt-1">O nome é obrigatório.</div> }
+                </div>
+                <div class="mb-3">
+                  <label for="volunteer_cpf" class="form-label">CPF (Opcional)</label>
+                  <input type="text" id="volunteer_cpf" class="form-control" formControlName="cpf">
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="volunteer_email" class="form-label">E-mail</label>
+                    <input type="email" id="volunteer_email" class="form-control" formControlName="email">
+                    @if(isVolunteerInvalid('email')) { <div class="text-danger small mt-1">Por favor, insira um e-mail válido.</div> }
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="volunteer_phone" class="form-label">Telefone / WhatsApp</label>
+                    <input type="tel" id="volunteer_phone" class="form-control" formControlName="phone">
+                    @if(isVolunteerInvalid('phone')) { <div class="text-danger small mt-1">O telefone é obrigatório.</div> }
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <label for="how_to_help" class="form-label">De que forma você gostaria de ajudar?</label>
+                  <textarea id="how_to_help" class="form-control" formControlName="how_to_help" rows="4" placeholder="Ex: Ajudar na triagem, tenho experiência com logística, etc..."></textarea>
+                  @if(isVolunteerInvalid('how_to_help')) { <div class="text-danger small mt-1">Este campo é obrigatório.</div> }
+                </div>
+                <div class="d-flex justify-content-end align-items-center mt-4">
+                  <button type="button" class="btn btn-link me-3" (click)="activeForm = null">Voltar</button>
+                  <button type="submit" class="btn btn-primary btn-lg" [disabled]="isSubmitting">
+                    @if(isSubmitting) { <span>Enviando...</span> } @else { <span>Enviar Cadastro</span> }
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-        } @else {
+        }
+
+        @if (submittedSuccessfully !== null) {
           <div class="text-center p-5">
-            <div class="abrace-icon mb-3"><i class="fas fa-times-circle text-danger"></i></div>
-            <h3 class="abrace-title">Algo deu errado...</h3>
-            <p class="lead">Não foi possível enviar seu formulário. Por favor, tente novamente mais tarde ou entre em contato por outro canal.</p>
+            @if (submittedSuccessfully) {
+              <div class="abrace-icon mb-3"><i class="fas fa-check-circle text-success"></i></div>
+              <h3 class="abrace-title">Obrigado!</h3>
+              <p class="lead">Seu formulário {{ submittedFormType }} foi enviado. Entraremos em contato em breve!</p>
+            } @else {
+              <div class="abrace-icon mb-3"><i class="fas fa-times-circle text-danger"></i></div>
+              <h3 class="abrace-title">Algo deu errado...</h3>
+              <p class="lead">Não foi possível enviar seu formulário. Por favor, tente novamente.</p>
+            }
             <a routerLink="/" class="btn btn-outline-primary mt-3">Voltar para a Home</a>
           </div>
         }
