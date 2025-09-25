@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Membership } from '../../services/membership/membership';
 import { RouterModule } from '@angular/router';
+import { Membership } from '../../services/membership/membership';
 
 @Component({
-  selector: 'app-associar',
+  selector: 'app-junte',
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './associar.html',
-  styleUrl: './associar.scss'
+  templateUrl: './junte.html',
+  styleUrl: './junte.scss'
 })
-export class Associar implements OnInit {
+export class Junte implements OnInit {
   membershipForm: FormGroup;
   isSubmitting = false;
   submittedSuccessfully: boolean | null = null;

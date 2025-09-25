@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Associar } from './associar';
+import { Junte } from './junte';
 
-describe('Associar', () => {
-  let component: Associar;
-  let fixture: ComponentFixture<Associar>;
+describe('Junte', () => {
+  let component: Junte;
+  let fixture: ComponentFixture<Junte>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Associar]
+      imports: [Junte]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Associar);
+    fixture = TestBed.createComponent(Junte);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

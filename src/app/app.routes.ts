@@ -3,7 +3,7 @@ import { Home } from './pages/home/home';
 import { QuemSomos } from './pages/quem-somos/quem-somos';
 import { ComoAtuamos } from './pages/como-atuamos/como-atuamos';
 import { Blog } from './pages/blog/blog';
-import { Associar } from './pages/associar/associar';
+import { Junte } from './pages/junte/junte';
 import { ProjForm } from './admin/proj-form/proj-form';
 import { PostForm } from './admin/post-form/post-form';
 import { authGuard } from './guards/auth-guard';
@@ -19,7 +19,7 @@ export const routes: Routes = [
     { path: 'somos', component: QuemSomos },
     { path: 'atuamos', component: ComoAtuamos },
     { path: 'blog', component: Blog },
-    { path: 'associar', component: Associar },
+    { path: 'junte', component: Junte },
     { path: 'projects', component: ProjectsList },
     { path: 'project/:id', component: ProjectsInfo },
     { path: 'posts', component: PostsList },
