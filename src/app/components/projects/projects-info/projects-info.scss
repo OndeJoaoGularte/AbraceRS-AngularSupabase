@@ -5,13 +5,6 @@
 }
 
 .content-wrapper {
-  ::ng-deep img {
-    max-width: 200px;
-    height: auto;
-    margin: 1rem;
-    border-radius: 8px;
-  }
-
   ::ng-deep h1, ::ng-deep h2 {
     color: var(--cor-primaria);
     margin: 1.5rem 0 0.5rem; 

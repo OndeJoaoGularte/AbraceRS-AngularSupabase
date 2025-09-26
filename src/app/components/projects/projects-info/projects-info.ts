@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Projects } from '../../../services/projects/projects';
+import { GalleriaModule } from 'primeng/galleria';
 
 @Component({
   selector: 'app-projects-info',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, GalleriaModule],
   templateUrl: './projects-info.html',
   styleUrl: './projects-info.scss'
 })

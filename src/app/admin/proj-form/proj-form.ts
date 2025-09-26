@@ -18,6 +18,7 @@ export class ProjForm implements OnInit, OnDestroy {
   selectedFile: File | null = null;
   imagePreview: string | null = null;
   isUploading = false;
+  galleryFiles: File[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -72,6 +73,13 @@ export class ProjForm implements OnInit, OnDestroy {
     }
   }
 
+  onGalleryFilesSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.galleryFiles = Array.from(input.files);
+    }
+  }
+
   async onSubmit(): Promise<void> {
     if (this.projectForm.invalid) {
       return;
@@ -91,7 +99,22 @@ export class ProjForm implements OnInit, OnDestroy {
       }
     }
 
-    const formValue = { ...this.projectForm.value, image_url: imageUrl };
+    const galleryImageUrls = [];
+    if (this.galleryFiles.length > 0) {
+      for (const file of this.galleryFiles) {
+        const url = await this.projectsService.uploadProjectImage(file);
+        if (url) {
+          galleryImageUrls.push({
+            itemImageSrc: url,
+            thumbnailImageSrc: url,
+            alt: this.projectForm.value.name,
+            title: this.projectForm.value.name
+          });
+        }
+      }
+    }
+
+    const formValue = { ...this.projectForm.value, image_url: imageUrl, gallery_images: galleryImageUrls };
     formValue.status = (formValue.status === 'true' || formValue.status === true);
 
     if (this.isEditMode && this.projectId) {

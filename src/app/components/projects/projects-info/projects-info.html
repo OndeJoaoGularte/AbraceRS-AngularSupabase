@@ -13,7 +13,31 @@
           </div>
         </div>
         <hr class="mb-4">
+        <div class="col-lg-8">
         <div class="content-wrapper" [innerHTML]="safeHtmlContent"></div>
+
+        @if (project.gallery_images && project.gallery_images.length > 0) {
+          <div>
+            <p-galleria 
+              [value]="project.gallery_images" 
+              [numVisible]="4" 
+              [circular]="true"
+              [showItemNavigators]="true" 
+              [showThumbnails]="true">
+              
+              <ng-template pTemplate="item" let-item>
+                  <img [src]="item.itemImageSrc" style="width: 100%; display: block;" [alt]="item.alt"/>
+              </ng-template>
+              <ng-template pTemplate="thumbnail" let-item>
+                  <div class="grid grid-nogutter justify-content-center">
+                      <img [src]="item.thumbnailImageSrc" style="width: 100px; display: block;" [alt]="item.alt"/>
+                  </div>
+              </ng-template>
+            </p-galleria>
+          </div>
+        }
+
+      </div>
       </div>
 
       <div class="col-lg-4">
