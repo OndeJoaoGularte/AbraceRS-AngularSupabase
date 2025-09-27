@@ -30,6 +30,7 @@ export class ProjForm implements OnInit, OnDestroy {
       name: ['', Validators.required],
       description: ['', Validators.required],
       status: [true, Validators.required],
+      public: [false, Validators.required],
       start: ['', Validators.required],
       finish: [''],
       content: [''],
@@ -82,6 +83,7 @@ export class ProjForm implements OnInit, OnDestroy {
 
   async onSubmit(): Promise<void> {
     if (this.projectForm.invalid) {
+      this.projectForm.markAllAsTouched();
       return;
     }
 
@@ -116,14 +118,22 @@ export class ProjForm implements OnInit, OnDestroy {
 
     const formValue = { ...this.projectForm.value, image_url: imageUrl, gallery_images: galleryImageUrls };
     formValue.status = (formValue.status === 'true' || formValue.status === true);
+    formValue.public = (formValue.public === 'true' || formValue.public === true);
+
+    let savedProjectData;
 
     if (this.isEditMode && this.projectId) {
-      await this.projectsService.updateProject(this.projectId, formValue);
+      savedProjectData = await this.projectsService.updateProject(this.projectId, formValue);
     } else {
-      await this.projectsService.createProject(formValue);
+      savedProjectData = await this.projectsService.createProject(formValue);
     }
 
     this.isUploading = false;
-    this.router.navigate(['/projects']);
+    if (savedProjectData && savedProjectData.data) {
+      const newProjectId = savedProjectData.data[0].id;
+      this.router.navigate(['/project', newProjectId]);
+    } else {
+      this.router.navigate(['/projects']);
+    }
   }
 }

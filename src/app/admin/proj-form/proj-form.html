@@ -24,6 +24,14 @@
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label for="public" class="form-label">Visibilidade</label>
+                    <select id="public" formControlName="public" class="form-select">
+                        <option [value]="false">Apenas Administradores (Rascunho)</option>
+                        <option [value]="true">Público (Visível para todos)</option>
+                    </select>
+                </div>
+
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="start" class="form-label">Data de Início</label>
@@ -37,24 +45,27 @@
 
                 <div class="mb-3">
                     <label for="imageFile" class="form-label">Imagem de Destaque</label>
-                    <input type="file" id="imageFile" class="form-control" (change)="onFileSelected($event)" accept="image/png, image/jpeg">
+                    <input type="file" id="imageFile" class="form-control" (change)="onFileSelected($event)"
+                        accept="image/png, image/jpeg">
                 </div>
 
                 @if (imagePreview) {
-                    <div class="mb-4 text-center">
-                        <p class="mb-2">Pré-visualização:</p>
-                        <img [src]="imagePreview" alt="Pré-visualização da Imagem" style="max-width: 300px; max-height: 200px; border-radius: 8px;">
-                    </div>
+                <div class="mb-4 text-center">
+                    <p class="mb-2">Pré-visualização:</p>
+                    <img [src]="imagePreview" alt="Pré-visualização da Imagem"
+                        style="max-width: 300px; max-height: 200px; border-radius: 8px;">
+                </div>
                 }
 
-                 <div class="mb-3">
-  <label for="galleryFiles" class="form-label">Imagens da Galeria (selecione várias)</label>
-  <input type="file" id="galleryFiles" class="form-control" multiple (change)="onGalleryFilesSelected($event)" accept="image/png, image/jpeg, image/webp">
-</div>
+                <div class="mb-3">
+                    <label for="galleryFiles" class="form-label">Imagens da Galeria (selecione várias)</label>
+                    <input type="file" id="galleryFiles" class="form-control" multiple
+                        (change)="onGalleryFilesSelected($event)" accept="image/png, image/jpeg, image/webp">
+                </div>
 
                 <div class="mb-4">
                     <label class="form-label">Conteúdo Completo do Projeto</label>
-                    
+
                     <p-editor formControlName="content" [style]="{'height':'320px'}"></p-editor>
                 </div>
 
@@ -62,14 +73,14 @@
                     <a routerLink="/atuamos" class="btn btn-secondary me-2">Cancelar</a>
                     <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid || isUploading">
                         @if (isUploading) {
-                            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                            <span>Salvando...</span>
+                        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                        <span>Salvando...</span>
                         } @else {
-                            <span>{{ isEditMode ? 'Salvar Alterações' : 'Cadastrar Projeto' }}</span>
+                        <span>{{ isEditMode ? 'Salvar Alterações' : 'Cadastrar Projeto' }}</span>
                         }
                     </button>
                 </div>
-                
+
             </form>
         </div>
     </div>

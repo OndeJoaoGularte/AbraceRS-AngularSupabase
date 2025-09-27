@@ -51,10 +51,12 @@ export class ProjectsList implements OnInit, OnDestroy {
 
   async loadProjects(): Promise<void> {
     this.loading = true;
+    const isAdmin = this.authService.isLoggedIn();
     this.projects = await this.projectsService.getProjects(
       this.filterStatus,
       this.presentOrdination,
-      this.searchTool
+      this.searchTool,
+      isAdmin
     );
     this.loading = false;
   }

@@ -10,9 +10,14 @@ export class Projects {
   async getProjects(
     filterStatus: 'all' | boolean,
     filterOrdination: string,
-    searchTool: string
+    searchTool: string,
+    isUserAdmin: boolean
   ) {
     let query = this.supabaseService.client.from('projects').select('*'); // seleciona todos os campos da tabela
+
+    if (!isUserAdmin) {
+      query = query.eq('public', true);
+    }
 
     if (filterStatus !== 'all') {
       query = query.eq('status', filterStatus); // se o valor não for 'all', o filtro é adicionado
@@ -128,6 +133,7 @@ export class Projects {
     .from('projects')
     .select('*')
     .eq('status', true)
+    .eq('public', true)
     .order('updated', { ascending: false })
     .limit(limit);
 
