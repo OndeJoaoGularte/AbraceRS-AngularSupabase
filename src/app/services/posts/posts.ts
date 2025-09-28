@@ -7,8 +7,16 @@ import { Supabase } from '../supabase/supabase';
 export class Posts {
   constructor(private supabaseService: Supabase) {}
 
-  async getPosts(filterOrdination: string, searchTool: string) {
+  async getPosts(
+    filterOrdination: string, 
+    searchTool: string,
+    isUserAdmin: boolean
+  ) {
     let query = this.supabaseService.client.from('posts').select('*');
+
+    if (!isUserAdmin) {
+      query = query.eq('public', true);
+    }
 
     if (searchTool) {
       query = query.or(
@@ -100,13 +108,14 @@ export class Posts {
     Posts para a Home
   */
 
-  async getPaginatedPosts(page: number, limit: number) {
+  async getPaginatedPosts(page: number, limit: number, isUserAdmin: boolean) {
     const from = page * limit;
     const to = from + limit - 1;
 
     const { data, error, count } = await this.supabaseService.client
       .from('posts')
       .select('*', { count: 'exact' })
+      .eq('public', true)
       .order('publish', { ascending: false })
       .range(from, to);
 

@@ -22,6 +22,7 @@ export class ProjectsList implements OnInit, OnDestroy {
 
   private searchSubject = new Subject<string>();
   private searchSubscription!: Subscription;
+  private authSubscription!: Subscription;
 
   constructor(
     private projectsService: Projects,
@@ -38,11 +39,14 @@ export class ProjectsList implements OnInit, OnDestroy {
       this.loadProjects();
     });
 
-    this.loadProjects();
+    this.authSubscription = this.authService.currentUser$.subscribe(user => {
+      this.loadProjects(); 
+    });
   }
 
   ngOnDestroy(): void {
     this.searchSubscription.unsubscribe();
+    this.authSubscription.unsubscribe();
   }
 
   onSearchInput(term: string): void {

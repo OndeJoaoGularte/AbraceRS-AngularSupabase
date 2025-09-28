@@ -3,6 +3,7 @@ import { Projects } from '../../services/projects/projects';
 import { Posts } from '../../services/posts/posts';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Auth } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +40,8 @@ export class Home implements OnInit {
 
   constructor(
     private projectsService: Projects,
-    private postsService: Posts
+    private postsService: Posts,
+    private authService: Auth
   ) {}
 
   ngOnInit(): void {
@@ -61,9 +63,11 @@ export class Home implements OnInit {
 
   // Carregamento de novos Posts
   async loadMorePosts(): Promise<void> {
+    const isUserAdmin = this.authService.isLoggedIn();
     const { data, count } = await this.postsService.getPaginatedPosts(
       this.currentPage,
-      this.postsPerPage
+      this.postsPerPage,
+      isUserAdmin
     );
 
     this.latestPosts.push(...data);

@@ -11,8 +11,26 @@
       }
     </div>
 
-    <hr>
-    
-    <div [innerHTML]="safeHtmlContent"></div>
+    <hr class="mb-4">
+      <div>
+        <div class="content-wrapper" [innerHTML]="safeHtmlContent"></div>
+
+        @if (post.gallery_images && post.gallery_images.length > 0) {
+        <div>
+          <p-galleria [value]="post.gallery_images" [numVisible]="4" [circular]="true" [showItemNavigators]="true"
+            [showThumbnails]="true">
+
+            <ng-template pTemplate="item" let-item>
+              <img [src]="item.itemImageSrc" style="width: 100%; display: block;" [alt]="item.alt" />
+            </ng-template>
+            <ng-template pTemplate="thumbnail" let-item>
+              <div class="grid grid-nogutter justify-content-center">
+                <img [src]="item.thumbnailImageSrc" style="width: 100px; display: block;" [alt]="item.alt" />
+              </div>
+            </ng-template>
+          </p-galleria>
+        </div>
+        }
+      </div>
   }
 </div>

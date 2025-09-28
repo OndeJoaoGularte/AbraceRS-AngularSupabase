@@ -7,13 +7,21 @@
       <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
 
         <div class="mb-3">
-          <label for="title" class="form-label">Título</label>
+          <label for="title" class="form-label">Título da Postagem</label>
           <input type="text" id="title" formControlName="title" class="form-control">
         </div>
 
         <div class="mb-3">
-          <label for="summary" class="form-label">Resumo (aparecerá nos cards)</label>
+          <label for="summary" class="form-label">Resumo da Postagem</label>
           <textarea id="summary" formControlName="summary" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="public" class="form-label">Visibilidade</label>
+          <select id="public" formControlName="public" class="form-select">
+            <option [value]="false">Apenas Administradores (Rascunho)</option>
+            <option [value]="true">Público (Visível para todos)</option>
+          </select>
         </div>
 
         <div class="mb-3">
@@ -30,10 +38,15 @@
         </div>
         }
 
+        <div class="mb-3">
+          <label for="galleryFiles" class="form-label">Imagens da Galeria (selecione várias)</label>
+          <input type="file" id="galleryFiles" class="form-control" multiple (change)="onGalleryFilesSelected($event)"
+            accept="image/png, image/jpeg, image/webp">
+        </div>
+
         <div class="mb-4">
           <label class="form-label">Conteúdo Completo da Postagem</label>
-          
-          <!-- NOVO EDITOR p-editor DA PRIMENG -->
+
           <p-editor formControlName="content" [style]="{'height':'320px'}"></p-editor>
 
         </div>
@@ -41,12 +54,12 @@
         <div class="d-flex justify-content-end">
           <a routerLink="/blog" class="btn btn-secondary me-2">Cancelar</a>
           <button type="submit" class="btn btn-primary" [disabled]="postForm.invalid || isUploading">
-            
+
             @if (isUploading) {
-              <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-              <span>Salvando...</span>
+            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            <span>Salvando...</span>
             } @else {
-              <span>{{ isEditMode ? 'Salvar Alterações' : 'Publicar Postagem' }}</span>
+            <span>{{ isEditMode ? 'Salvar Alterações' : 'Publicar Postagem' }}</span>
             }
 
           </button>

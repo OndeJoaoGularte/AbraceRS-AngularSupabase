@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Posts } from '../../../services/posts/posts';
+import { GalleriaModule } from 'primeng/galleria';
 
 @Component({
   selector: 'app-posts-info',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, GalleriaModule],
   templateUrl: './posts-info.html',
   styleUrl: './posts-info.scss'
 })
@@ -26,7 +27,14 @@ export class PostsInfo implements OnInit {
     if (id) {
       this.post = await this.postsService.getPostById(Number(id));
       if (this.post && this.post.content) {
-        this.safeHtmlContent = this.sanitizer.bypassSecurityTrustHtml(this.post.content);
+        console.log('Conteúdo vindo do Supabase:', this.post.content);
+        let dirtyHtml = this.post.content;
+        
+        const nonBreakingSpace = /&nbsp;/g;
+        
+        const cleanHtml = dirtyHtml.replace(nonBreakingSpace, ' ');
+
+        this.safeHtmlContent = this.sanitizer.bypassSecurityTrustHtml(cleanHtml);
       }
     }
     this.loading = false;

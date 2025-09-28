@@ -48,7 +48,12 @@ export class PostsList implements OnInit, OnDestroy {
 
   async loadPosts(): Promise<void> {
     this.loading = true;
-    this.posts = await this.postsService.getPosts(this.presentOrdination, this.searchTool);
+    const isAdmin = this.authService.isLoggedIn();
+    this.posts = await this.postsService.getPosts(
+      this.presentOrdination, 
+      this.searchTool, 
+      isAdmin
+    );
     this.loading = false;
   }
 
