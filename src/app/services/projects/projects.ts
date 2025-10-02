@@ -140,4 +140,15 @@ export class Projects {
   if (error) console.error('Erro ao buscar últimos projetos:', error);
   return data || [];
 }
+
+async deleteProjectImage(fileName: string): Promise<{ error: any }> {
+    const { error } = await this.supabaseService.client.storage
+      .from('project-images')
+      .remove([fileName]);
+
+    if (error) {
+      console.error('Erro ao deletar imagem do storage:', error);
+    }
+    return { error };
+  }
 }

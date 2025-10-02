@@ -24,6 +24,7 @@ export class ProjForm implements OnInit {
   imagePreview: string | null = null;
   isUploading = false;
   galleryFiles: File[] = [];
+  existingGalleryImages: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -67,6 +68,10 @@ export class ProjForm implements OnInit {
       if (project.image_url) {
         this.imagePreview = project.image_url;
       }
+
+      if (project.gallery_images) {
+        this.existingGalleryImages = project.gallery_images;
+      }
     }
   }
 
@@ -88,6 +93,19 @@ export class ProjForm implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       this.galleryFiles = Array.from(input.files);
+    }
+  }
+
+  // função para deletar arquivos da galeria
+  async removeExistingGalleryImage(imageToRemove: any, index: number): Promise<void> {
+    if (confirm('Tem certeza que deseja remover esta imagem da galeria?')) {
+      const { error } = await this.projectsService.deleteProjectImage(imageToRemove.fileName);
+
+      if (error) {
+        alert('Ocorreu um erro ao remover a imagem.');
+      } else {
+        this.existingGalleryImages.splice(index, 1);
+      }
     }
   }
 
@@ -117,16 +135,21 @@ export class ProjForm implements OnInit {
     }
 
     // upload das imagens da galeria para o supabase
-    const galleryImageUrls = [];
+    let finalGalleryImages = [...this.existingGalleryImages];
     if (this.galleryFiles.length > 0) {
       for (const file of this.galleryFiles) {
         const url = await this.projectsService.uploadProjectImage(file);
-        if (url) {
-          galleryImageUrls.push({
+        // extrai o nome do arquivo para ele poder ser diferenciado ao deletar
+        const fileName = url?.split('/').pop(); 
+        
+        if (url && fileName) {
+          // adiciona a nova imagem à lista
+          finalGalleryImages.push({
             itemImageSrc: url,
             thumbnailImageSrc: url,
             alt: this.projectForm.value.name,
             title: this.projectForm.value.name,
+            fileName: fileName
           });
         }
       }
@@ -136,8 +159,9 @@ export class ProjForm implements OnInit {
     const formValue = {
       ...this.projectForm.value,
       image_url: imageUrl,
-      gallery_images: galleryImageUrls,
+      gallery_images: finalGalleryImages
     };
+
     // converte os valores dos selects para boolean
     formValue.status = formValue.status === 'true' || formValue.status === true;
     formValue.public = formValue.public === 'true' || formValue.public === true;

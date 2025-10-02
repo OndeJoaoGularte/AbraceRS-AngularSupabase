@@ -24,6 +24,7 @@ export class PostForm implements OnInit {
   imagePreview: string | null = null;
   isUploading = false;
   galleryFiles: File[] = [];
+  existingGalleryImages: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -60,6 +61,10 @@ export class PostForm implements OnInit {
       if (post.image_url) {
         this.imagePreview = post.image_url;
       }
+
+      if (post.gallery_images) {
+        this.existingGalleryImages = post.gallery_images;
+      }
     }
   }
 
@@ -81,6 +86,19 @@ export class PostForm implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       this.galleryFiles = Array.from(input.files);
+    }
+  }
+
+  // função para deletar arquivos da galeria
+  async removeExistingGalleryImage(imageToRemove: any, index: number): Promise<void> {
+    if (confirm('Tem certeza que deseja remover esta imagem da galeria?')) {
+      const { error } = await this.postsService.deletePostImage(imageToRemove.fileName);
+
+      if (error) {
+        alert('Ocorreu um erro ao remover a imagem.');
+      } else {
+        this.existingGalleryImages.splice(index, 1);
+      }
     }
   }
 
@@ -110,26 +128,32 @@ export class PostForm implements OnInit {
     }
 
     // upload das imagens da galeria para o supabase
-    const galleryImageUrls = [];
+    let finalGalleryImages = [...this.existingGalleryImages];
     if (this.galleryFiles.length > 0) {
       for (const file of this.galleryFiles) {
         const url = await this.postsService.uploadPostImage(file);
-        if (url) {
-          galleryImageUrls.push({
+        // extrai o nome do arquivo para ele poder ser diferenciado ao deletar
+        const fileName = url?.split('/').pop(); 
+        
+        if (url && fileName) {
+          // adiciona a nova imagem à lista
+          finalGalleryImages.push({
             itemImageSrc: url,
             thumbnailImageSrc: url,
-            alt: this.postForm.value.title,
-            title: this.postForm.value.title,
+            alt: this.postForm.value.name,
+            title: this.postForm.value.name,
+            fileName: fileName
           });
         }
       }
     }
 
+
     // monta o objeto final para salvar
     const formValue = {
       ...this.postForm.value,
       image_url: imageUrl,
-      gallery_images: galleryImageUrls,
+      gallery_images: finalGalleryImages
     };
     // converte os valores dos selects para boolean
     formValue.public = formValue.public === 'true' || formValue.public === true;

@@ -125,4 +125,15 @@ export class Posts {
     }
     return { data: data || [], count: count || 0 };
   }
+
+  async deletePostImage(fileName: string): Promise<{ error: any }> {
+    const { error } = await this.supabaseService.client.storage
+      .from('post-images')
+      .remove([fileName]);
+
+    if (error) {
+      console.error('Erro ao deletar imagem do storage:', error);
+    }
+    return { error };
+  }
 }
