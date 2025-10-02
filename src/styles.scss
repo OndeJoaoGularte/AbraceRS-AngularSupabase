@@ -22,12 +22,32 @@ body {
 .btn-primary {
   background-color: var(--cor-primaria);
   border-color: var(--cor-primaria);
-  color: var(--cor-texto-claro); 
+  color: var(--cor-texto-claro);
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
 
-  &:hover {
-    background-color: #015C65;
+  &:hover{
+  background-color: #015C65;
   border-color: #015C65;
-  color: var(--cor-texto-claro)
+  color: var(--cor-texto-claro);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active,
+  &.btn:active {
+  background-color: #014c54;
+  border-color: #014c54;
+  transform: translateY(0);
+  box-shadow: none;
+  }
+
+  &:focus-visible{
+  background-color: #015C65;
+  border-color: #015C65;
+  color: var(--cor-texto-claro);
+  box-shadow: 0 0 0 0.25rem rgba(2, 117, 129, 0.5);
+  outline: none;
   }
 }
 
@@ -35,9 +55,29 @@ body {
   color: var(--cor-primaria);
   border-color: var(--cor-primaria);
   font-weight: 600;
+  transition: all 0.2s ease-in-out;
+
   &:hover {
     background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
     color: #fff;
+    transform: translateY(-2px);
+  }
+
+  &:active,
+  &.btn:active {
+    background-color: #015C65;
+    border-color: #015C65;
+    color: #fff;
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    background-color: var(--cor-primaria);
+    color: #fff;
+    box-shadow: 0 0 0 0.25rem rgba(2, 117, 129, 0.5);
+    outline: none;
   }
 }
 

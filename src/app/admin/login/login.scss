@@ -1,0 +1,15 @@
+.login-container {
+  min-height: calc(100vh - 85px);
+  background-image: linear-gradient(to top right, var(--cor-primaria), var(--cor-secundaria));
+}
+
+.card {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 12px;
+}
+
+.login-logo {
+  height: 80px;
+  margin-bottom: 1rem;
+}

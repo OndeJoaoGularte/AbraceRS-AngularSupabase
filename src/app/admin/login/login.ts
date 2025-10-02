@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.scss'
@@ -27,14 +26,18 @@ export class Login {
     });
   }
 
+  // função chamada ao submeter formulário
   async onSubmit(): Promise<void> {
+    // exibe os erros, se houver, e interrompe a função
     if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
       return;
     }
 
-    this.loading = true;
-    this.errorMessage = null;
+    this.loading = true; // ativa estado de carregamento
+    this.errorMessage = null; // limpa mensagens de erro anteriores
 
+    // extrai os valores e chama o método de login
     const { email, password } = this.loginForm.value;
     const { error } = await this.authService.signInWithPassword(email, password);
 
@@ -44,5 +47,11 @@ export class Login {
     } else {
       this.router.navigate(['/home']);
     }
+  }
+
+  // função para verificar os erros do formulário
+  isInvalid(controlName: string): boolean {
+    const control = this.loginForm.get(controlName);
+    return !!control && control.invalid && (control.dirty || control.touched);
   }
 }
