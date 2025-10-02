@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Auth } from '../../services/auth/auth';
 import { CommonModule } from '@angular/common';
@@ -8,7 +13,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-login',
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.html',
-  styleUrl: './login.scss'
+  styleUrl: './login.scss',
 })
 export class Login {
   loginForm: FormGroup;
@@ -22,7 +27,7 @@ export class Login {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
@@ -39,7 +44,10 @@ export class Login {
 
     // extrai os valores e chama o método de login
     const { email, password } = this.loginForm.value;
-    const { error } = await this.authService.signInWithPassword(email, password);
+    const { error } = await this.authService.signInWithPassword(
+      email,
+      password
+    );
 
     if (error) {
       this.errorMessage = 'Email ou senha inválidos. Tente novamente.';

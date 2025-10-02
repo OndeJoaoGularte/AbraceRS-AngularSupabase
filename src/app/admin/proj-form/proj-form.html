@@ -1,87 +1,103 @@
-<div class="container mt-5">
-    <div class="card shadow-sm">
-        <div class="card-header">
-            <h2>{{ isEditMode ? "Editar Projeto" : "Cadastrar Novo Projeto" }}</h2>
-        </div>
-        <div class="card-body">
-            <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nome do Projeto</label>
-                    <input type="text" id="name" formControlName="name" class="form-control" />
-                </div>
-
-                <div class="mb-3">
-                    <label for="description" class="form-label">Resumo do Projeto</label>
-                    <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <select id="status" formControlName="status" class="form-select">
-                        <option value="true">Ativo</option>
-                        <option value="false">Inativo</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="public" class="form-label">Visibilidade</label>
-                    <select id="public" formControlName="public" class="form-select">
-                        <option [value]="false">Apenas Administradores (Rascunho)</option>
-                        <option [value]="true">Público (Visível para todos)</option>
-                    </select>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="start" class="form-label">Data de Início</label>
-                        <input type="date" id="start" formControlName="start" class="form-control" />
+<div class="proj-form-container d-flex justify-content-center align-items-center">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white py-3">
+                        <h2 class="abrace-title mb-0 text-center">
+                            {{ isEditMode ? "Editar Projeto" : "Cadastrar Novo Projeto" }}
+                        </h2>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="finish" class="form-label">Data de Conclusão (opcional)</label>
-                        <input type="date" id="finish" formControlName="finish" class="form-control" />
+                    <div class="card-body p-4 p-md-5 pb-md-4">
+                        <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+                            <div class="mb-3">
+                                <label for="name" class="form-label fw-bold">Nome do Projeto</label>
+                                <input type="text" id="name" formControlName="name" class="form-control"
+                                    [class.is-invalid]="isInvalid('name')">
+                                @if(isInvalid('name')) { <div class="invalid-feedback">O nome é obrigatório.</div> }
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label fw-bold">Descrição do Projeto</label>
+                                <textarea id="description" formControlName="description" class="form-control" rows="3"
+                                    [class.is-invalid]="isInvalid('description')"></textarea>
+                                @if(isInvalid('description')) { <div class="invalid-feedback">A descrição é obrigatória.
+                                </div> }
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="status" class="form-label fw-bold">Status</label>
+                                    <select id="status" formControlName="status" class="form-select">
+                                        <option value="true">Ativo</option>
+                                        <option value="false">Inativo</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="public" class="form-label fw-bold">Visibilidade</label>
+                                    <select id="public" formControlName="public" class="form-select">
+                                        <option [value]="false">Apenas Administradores (Rascunho)</option>
+                                        <option [value]="true">Público (Visível para todos)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="start" class="form-label fw-bold">Data de Início</label>
+                                    <input type="date" id="start" formControlName="start" class="form-control" />
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="finish" class="form-label fw-bold">Data de Conclusão (opcional)</label>
+                                    <input type="date" id="finish" formControlName="finish" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="imageFile" class="form-label fw-bold">Imagem de Destaque</label>
+                                    <input type="file" id="imageFile" class="form-control"
+                                        (change)="onFileSelected($event)" accept="image/png, image/jpeg">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="galleryFiles" class="form-label fw-bold">Imagens da Galeria (selecione
+                                        várias)</label>
+                                    <input type="file" id="galleryFiles" class="form-control" multiple
+                                        (change)="onGalleryFilesSelected($event)" accept="image/png, image/jpeg">
+                                </div>
+                            </div>
+
+                            @if (imagePreview) {
+                            <div class="mb-4 text-center">
+                                <p class="mb-2">Pré-visualização da Imagem de Destaque:</p>
+                                <img [src]="imagePreview" alt="Pré-visualização" class="image-preview">
+                            </div>
+                            }
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Conteúdo Completo do Projeto</label>
+                                <p-editor formControlName="content" [style]="{'height':'320px'}"></p-editor>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <a routerLink="/atuamos" class="btn btn-danger me-3">Cancelar</a>
+                                <button type="submit" class="btn btn-primary"
+                                    [disabled]="projectForm.invalid || isUploading">
+                                    @if (isUploading) {
+                                    <span class="spinner-border spinner-border-sm me-1"></span>
+                                    <span>Salvando...</span>
+                                    } @else {
+                                    <span>{{ isEditMode ? 'Salvar Alterações' : 'Cadastrar Projeto' }}</span>
+                                    }
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                <div class="mb-3">
-                    <label for="imageFile" class="form-label">Imagem de Destaque</label>
-                    <input type="file" id="imageFile" class="form-control" (change)="onFileSelected($event)"
-                        accept="image/png, image/jpeg">
-                </div>
-
-                @if (imagePreview) {
-                <div class="mb-4 text-center">
-                    <p class="mb-2">Pré-visualização:</p>
-                    <img [src]="imagePreview" alt="Pré-visualização da Imagem"
-                        style="max-width: 300px; max-height: 200px; border-radius: 8px;">
-                </div>
-                }
-
-                <div class="mb-3">
-                    <label for="galleryFiles" class="form-label">Imagens da Galeria (selecione várias)</label>
-                    <input type="file" id="galleryFiles" class="form-control" multiple
-                        (change)="onGalleryFilesSelected($event)" accept="image/png, image/jpeg, image/webp">
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label">Conteúdo Completo do Projeto</label>
-
-                    <p-editor formControlName="content" [style]="{'height':'320px'}"></p-editor>
-                </div>
-
-                <div class="d-flex justify-content-end">
-                    <a routerLink="/atuamos" class="btn btn-secondary me-2">Cancelar</a>
-                    <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid || isUploading">
-                        @if (isUploading) {
-                        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                        <span>Salvando...</span>
-                        } @else {
-                        <span>{{ isEditMode ? 'Salvar Alterações' : 'Cadastrar Projeto' }}</span>
-                        }
-                    </button>
-                </div>
-
-            </form>
+            </div>
         </div>
     </div>
 </div>

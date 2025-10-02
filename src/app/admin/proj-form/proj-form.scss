@@ -1,0 +1,18 @@
+.proj-form-container {
+  min-height: calc(100vh - 85px);
+  background-image: linear-gradient(
+    to top right,
+    var(--cor-primaria),
+    var(--cor-secundaria)
+  );
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.image-preview {
+  max-width: 240px;
+  border-radius: 12px;
+  border: 1px solid #000;
+}
