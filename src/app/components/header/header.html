@@ -1,49 +1,69 @@
-<header>
-  <div class="top-bar" [class.scrolled]="isScrolled">
-    <div class="container d-flex justify-content-between align-items-center">
-      <div class="contact-info">
-        <span><i class="fas fa-phone me-2"></i>(51) 99380-1665</span>
-        <span class="ms-4 d-none d-md-inline"><i class="fas fa-envelope me-2"></i>institutoabracers&#64;gmail.com</span>
-      </div>
-      <div class="social-icons d-flex">
-        <a href="https://www.instagram.com/institutoabracers/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.tiktok.com/@institutoabracers" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-        <a href="https://x.com/InstAbraceRS" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="https://www.youtube.com/@AbraceRS" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-      </div>
-    </div>
-  </div>
-
-  <nav>
-    <div class="nav-container">
-      <a class="nav-logo" routerLink="/">
-        <img src="assets/images/abracelogors.png" alt="Logo Instituto AbraceRS" height="50" />
-      </a>
-
-      <div class="nav-main-group" [class.active]="isMenuOpen">
-        <ul class="nav-links">
-          <li><a class="nav-link" routerLink="/home" routerLinkActive="active-link" (click)="isMenuOpen = false">Home</a></li>
-          <li><a class="nav-link" routerLink="/somos" routerLinkActive="active-link" (click)="isMenuOpen = false">Quem Somos</a></li>
-          <li><a class="nav-link" routerLink="/atuamos" routerLinkActive="active-link" (click)="isMenuOpen = false">Como Atuamos</a></li>
-          <li><a class="nav-link" routerLink="/blog" routerLinkActive="active-link" (click)="isMenuOpen = false">Blog</a></li>
-          <li><a class="nav-link" routerLink="/junte" routerLinkActive="active-link" (click)="isMenuOpen = false">Junte-se a Nós</a></li>
-        </ul>
-
-        <div class="nav-actions">
-          <a class="nav-cta" (click)="openVakinha()">Doar</a>
-          @if (authService.isLoggedIn()) {
-            <button (click)="authService.signOut()" class="btn-logout">Sair</button>
-          }
+<header class="fixed-top">
+    <div class="top-bar" [class.scrolled]="isScrolled">
+        <div class="container d-flex justify-content-between align-items-center px-5">
+            <div class="contact-info">
+                <span>
+                    <i class="fas fa-phone me-2"></i>
+                    (51) 99380-1665
+                </span>
+                <span class="ms-4 d-none d-md-inline">
+                    <i class="fas fa-envelope me-2"></i>
+                    institutoabracers&#64;gmail.com
+                </span>
+            </div>
+            <div class="social-icons d-flex gap-4">
+                <a href="https://www.instagram.com/institutoabracers/" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@institutoabracers" target="_blank" aria-label="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://x.com/InstAbraceRS" target="_blank" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.youtube.com/@AbraceRS" target="_blank" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
         </div>
-      </div>
-
-      <div class="hamburger-menu" (click)="toggleMenu()" [class.active]="isMenuOpen" aria-label="Abrir ou fechar menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
     </div>
-  </nav>
+
+    <nav>
+        <div class="nav-container d-flex justify-content-between align-items-center mx-auto px-5">
+            <a class="nav-logo" routerLink="/">
+                <img src="assets/images/abracelogors.png" alt="Logo Instituto AbraceRS" height="50" />
+            </a>
+
+            <div class="nav-main-group gap-4" [class.active]="isMenuOpen">
+                <ul class="nav-links d-flex m-0 p-0 gap-4 align-items-center">
+                    <li><a class="nav-link" routerLink="/home" routerLinkActive="active-link"
+                            (click)="isMenuOpen = false">Home</a></li>
+                    <li><a class="nav-link" routerLink="/somos" routerLinkActive="active-link"
+                            (click)="isMenuOpen = false">Quem Somos</a></li>
+                    <li><a class="nav-link" routerLink="/atuamos" routerLinkActive="active-link"
+                            (click)="isMenuOpen = false">Como Atuamos</a></li>
+                    <li><a class="nav-link" routerLink="/blog" routerLinkActive="active-link"
+                            (click)="isMenuOpen = false">Blog</a></li>
+                    <li><a class="nav-link" routerLink="/junte" routerLinkActive="active-link"
+                            (click)="isMenuOpen = false">Junte-se a Nós</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <a class="nav-cta py-2 px-4 rounded-pill text-decoration-none" (click)="openVakinha()">Doar</a>
+                    @if (authService.isLoggedIn()) {
+                    <button (click)="authService.signOut()" class="btn btn-outline-danger py-2 px-4 rounded-pill">Sair</button>
+                    }
+                </div>
+            </div>
+
+            <div class="hamburger-menu" (click)="toggleMenu()" [class.active]="isMenuOpen"
+                aria-label="Abrir ou fechar menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
 </header>
 
 <div class="header-placeholder"></div>

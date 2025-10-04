@@ -1,25 +1,22 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Auth } from '../../services/auth/auth';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   imports: [RouterModule, CommonModule],
   templateUrl: './header.html',
-  styleUrl: './header.scss'
+  styleUrl: './header.scss',
 })
-export class Header implements OnInit {
+export class Header {
   isMenuOpen = false; //mantém menu mobile fechado
   isScrolled = false; //mantém barra superior aparecendo
 
-  constructor(public authService: Auth) {
-
-  }
-
-  ngOnInit(): void {
-
-  }
+  constructor(
+    public authService: Auth,
+    private router: Router
+) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -34,5 +31,10 @@ export class Header implements OnInit {
     this.isMenuOpen = false; //fecha menu mobile ao ser clicado
 
     window.open('https://www.vakinha.com.br/5580617', '_blank');
+  }
+
+  async onSignOut(): Promise<void> {
+    await this.authService.signOut();
+    this.router.navigate(['/']);
   }
 }
