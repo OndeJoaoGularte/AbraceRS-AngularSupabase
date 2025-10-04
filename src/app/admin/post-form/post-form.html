@@ -1,98 +1,103 @@
 <div class="post-form-container d-flex justify-content-center align-items-center">
-  <div class="container my-5">
-    <div class="row justify-content-center">
-      <div class="col-lg-9">
-        <div class="card shadow-sm">
-          <div class="card-header bg-white py-3">
-            <h2 class="abrace-title mb-0 text-center">
-              {{ isEditMode ? "Editar Postagem" : "Cadastrar Nova Postagem" }}
-            </h2>
-          </div>
-
-          <div class="card-body p-4 p-md-5 pb-md-4">
-            <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
-              <div class="mb-3">
-                <label for="title" class="form-label fw-bold">Título da Postagem</label>
-                <input type="text" id="title" formControlName="title" class="form-control"
-                  [class.is-invalid]="isInvalid('title')">
-                @if(isInvalid('title')) { <div class="invalid-feedback">O título é obrigatório.</div> }
-              </div>
-
-              <div class="mb-3">
-                <label for="summary" class="form-label fw-bold">Resumo da Postagem</label>
-                <textarea id="summary" formControlName="summary" class="form-control" rows="3"
-                  [class.is-invalid]="isInvalid('summary')"></textarea>
-                @if(isInvalid('summary')) { <div class="invalid-feedback">O resumo é obrigatório.</div> }
-              </div>
-
-              <div class="mb-3">
-                <label for="public" class="form-label fw-bold">Visibilidade</label>
-                <select id="public" formControlName="public" class="form-select">
-                  <option [value]="false">Apenas Administradores (Rascunho)</option>
-                  <option [value]="true">Público (Visível para todos)</option>
-                </select>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="imageFile" class="form-label fw-bold">Imagem de Destaque</label>
-                  <input type="file" id="imageFile" class="form-control" (change)="onFileSelected($event)"
-                    accept="image/png, image/jpeg">
-
-                  @if (imagePreview) {
-                  <div class="mb-4 text-center">
-                    <p class="mb-2 fw-bold">Pré-visualização:</p>
-                    <img [src]="imagePreview" alt="Pré-visualização da Imagem" class="image-preview">
-                  </div>
-                  }
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label for="galleryFiles" class="form-label fw-bold">Imagens da Galeria (selecione várias)</label>
-                  <input type="file" id="galleryFiles" class="form-control" multiple
-                    (change)="onGalleryFilesSelected($event)" accept="image/png, image/jpeg">
-
-                  @if (isEditMode && existingGalleryImages.length > 0) {
-                  <div class="mb-4">
-                    <p class="fw-bold">Imagens Atuais na Galeria:</p>
-                    <div class="d-flex flex-wrap gap-2">
-                      @for (image of existingGalleryImages; track $index) {
-                      <div class="gallery-preview-item">
-                        <img [src]="image.thumbnailImageSrc" [alt]="image.alt">
-                        <button type="button" class="btn-remove-img" (click)="removeExistingGalleryImage(image, $index)"
-                          title="Remover Imagem">
-                          &times;
-                        </button>
-                      </div>
-                      }
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white py-3">
+                        <h2 class="abrace-title mb-0 text-center">
+                            {{ isEditMode ? "Editar Postagem" : "Cadastrar Nova Postagem" }}
+                        </h2>
                     </div>
-                  </div>
-                  }
+
+                    <div class="card-body p-4 p-md-5 pb-md-4">
+                        <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+                            <div class="mb-3">
+                                <label for="title" class="form-label fw-bold">Título da Postagem</label>
+                                <input type="text" id="title" formControlName="title" class="form-control"
+                                    [class.is-invalid]="isInvalid('title')">
+                                @if(isInvalid('title')) { <div class="invalid-feedback">O título é obrigatório.</div> }
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="summary" class="form-label fw-bold">Resumo da Postagem</label>
+                                <textarea id="summary" formControlName="summary" class="form-control" rows="3"
+                                    [class.is-invalid]="isInvalid('summary')"></textarea>
+                                @if(isInvalid('summary')) { <div class="invalid-feedback">O resumo é obrigatório.</div>
+                                }
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="public" class="form-label fw-bold">Visibilidade</label>
+                                <select id="public" formControlName="public" class="form-select">
+                                    <option [value]="false">Apenas Administradores (Rascunho)</option>
+                                    <option [value]="true">Público (Visível para todos)</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="imageFile" class="form-label fw-bold">Imagem de Destaque</label>
+                                    <input type="file" id="imageFile" class="form-control"
+                                        (change)="onFileSelected($event)" accept="image/png, image/jpeg">
+
+                                    @if (imagePreview) {
+                                    <div class="mb-4 text-center">
+                                        <p class="mb-2 fw-bold">Pré-visualização:</p>
+                                        <img [src]="imagePreview" alt="Pré-visualização da Imagem"
+                                            class="image-preview">
+                                    </div>
+                                    }
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="galleryFiles" class="form-label fw-bold">Imagens da Galeria (selecione
+                                        várias)</label>
+                                    <input type="file" id="galleryFiles" class="form-control" multiple
+                                        (change)="onGalleryFilesSelected($event)" accept="image/png, image/jpeg">
+
+                                    @if (isEditMode && existingGalleryImages.length > 0) {
+                                    <div class="mb-4">
+                                        <p class="fw-bold">Imagens Atuais na Galeria:</p>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            @for (image of existingGalleryImages; track $index) {
+                                            <div class="gallery-preview-item">
+                                                <img [src]="image.thumbnailImageSrc" [alt]="image.alt">
+                                                <button type="button" class="btn-remove-img"
+                                                    (click)="removeExistingGalleryImage(image, $index)"
+                                                    title="Remover Imagem">
+                                                    &times;
+                                                </button>
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Conteúdo Completo da Postagem</label>
+                                <p-editor formControlName="content" [style]="{'height':'320px'}"></p-editor>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <a routerLink="/blog" class="btn btn-danger me-3">Cancelar</a>
+                                <button type="submit" class="btn btn-primary"
+                                    [disabled]="postForm.invalid || isUploading">
+
+                                    @if (isUploading) {
+                                    <span class="spinner-border spinner-border-sm me-1"></span>
+                                    <span>Salvando...</span>
+                                    } @else {
+                                    <span>{{ isEditMode ? 'Salvar Alterações' : 'Publicar Postagem' }}</span>
+                                    }
+
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-              </div>
-
-              <div class="mb-4">
-                <label class="form-label fw-bold">Conteúdo Completo da Postagem</label>
-                <p-editor formControlName="content" [style]="{'height':'320px'}"></p-editor>
-              </div>
-
-              <div class="d-flex justify-content-end">
-                <a routerLink="/blog" class="btn btn-danger me-3">Cancelar</a>
-                <button type="submit" class="btn btn-primary" [disabled]="postForm.invalid || isUploading">
-
-                  @if (isUploading) {
-                  <span class="spinner-border spinner-border-sm me-1"></span>
-                  <span>Salvando...</span>
-                  } @else {
-                  <span>{{ isEditMode ? 'Salvar Alterações' : 'Publicar Postagem' }}</span>
-                  }
-
-                </button>
-              </div>
-            </form>
-          </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>

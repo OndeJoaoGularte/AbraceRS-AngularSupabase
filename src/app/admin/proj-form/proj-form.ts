@@ -97,9 +97,14 @@ export class ProjForm implements OnInit {
   }
 
   // função para deletar arquivos da galeria
-  async removeExistingGalleryImage(imageToRemove: any, index: number): Promise<void> {
+  async removeExistingGalleryImage(
+    imageToRemove: any,
+    index: number
+  ): Promise<void> {
     if (confirm('Tem certeza que deseja remover esta imagem da galeria?')) {
-      const { error } = await this.projectsService.deleteProjectImage(imageToRemove.fileName);
+      const { error } = await this.projectsService.deleteProjectImage(
+        imageToRemove.fileName
+      );
 
       if (error) {
         alert('Ocorreu um erro ao remover a imagem.');
@@ -140,8 +145,8 @@ export class ProjForm implements OnInit {
       for (const file of this.galleryFiles) {
         const url = await this.projectsService.uploadProjectImage(file);
         // extrai o nome do arquivo para ele poder ser diferenciado ao deletar
-        const fileName = url?.split('/').pop(); 
-        
+        const fileName = url?.split('/').pop();
+
         if (url && fileName) {
           // adiciona a nova imagem à lista
           finalGalleryImages.push({
@@ -149,7 +154,7 @@ export class ProjForm implements OnInit {
             thumbnailImageSrc: url,
             alt: this.projectForm.value.name,
             title: this.projectForm.value.name,
-            fileName: fileName
+            fileName: fileName,
           });
         }
       }
@@ -159,7 +164,7 @@ export class ProjForm implements OnInit {
     const formValue = {
       ...this.projectForm.value,
       image_url: imageUrl,
-      gallery_images: finalGalleryImages
+      gallery_images: finalGalleryImages,
     };
 
     // converte os valores dos selects para boolean

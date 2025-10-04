@@ -90,9 +90,14 @@ export class PostForm implements OnInit {
   }
 
   // função para deletar arquivos da galeria
-  async removeExistingGalleryImage(imageToRemove: any, index: number): Promise<void> {
+  async removeExistingGalleryImage(
+    imageToRemove: any,
+    index: number
+  ): Promise<void> {
     if (confirm('Tem certeza que deseja remover esta imagem da galeria?')) {
-      const { error } = await this.postsService.deletePostImage(imageToRemove.fileName);
+      const { error } = await this.postsService.deletePostImage(
+        imageToRemove.fileName
+      );
 
       if (error) {
         alert('Ocorreu um erro ao remover a imagem.');
@@ -133,8 +138,8 @@ export class PostForm implements OnInit {
       for (const file of this.galleryFiles) {
         const url = await this.postsService.uploadPostImage(file);
         // extrai o nome do arquivo para ele poder ser diferenciado ao deletar
-        const fileName = url?.split('/').pop(); 
-        
+        const fileName = url?.split('/').pop();
+
         if (url && fileName) {
           // adiciona a nova imagem à lista
           finalGalleryImages.push({
@@ -142,18 +147,17 @@ export class PostForm implements OnInit {
             thumbnailImageSrc: url,
             alt: this.postForm.value.name,
             title: this.postForm.value.name,
-            fileName: fileName
+            fileName: fileName,
           });
         }
       }
     }
 
-
     // monta o objeto final para salvar
     const formValue = {
       ...this.postForm.value,
       image_url: imageUrl,
-      gallery_images: finalGalleryImages
+      gallery_images: finalGalleryImages,
     };
     // converte os valores dos selects para boolean
     formValue.public = formValue.public === 'true' || formValue.public === true;

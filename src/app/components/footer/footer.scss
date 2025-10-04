@@ -1,7 +1,7 @@
 footer {
   background-color: #fff;
   color: var(--cor-texto);
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid var(--cor-primaria);
 }
 
 /*
@@ -9,31 +9,26 @@ footer {
 */
 
 .main-footer {
-  padding: 4rem 0;
+  padding: 5rem 0;
 }
 
 .footer-logo {
-  max-height: 45px;
+  max-height: 50px;
 }
 
 .widget-title {
   font-weight: 700;
   color: var(--cor-primaria);
-  margin-bottom: 1.5rem;
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .footer-links {
-  li {
-    margin-bottom: 0.75rem;
-  }
-  
   a {
     color: var(--cor-texto);
     text-decoration: none;
-    opacity: 0.8;
+    opacity: 0.7;
     transition: all 0.3s ease;
 
     &:hover {
@@ -45,33 +40,33 @@ footer {
 }
 
 .footer-contact {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--cor-texto);
-    opacity: 0.8;
+  font-size: 0.9rem;
+  color: var(--cor-texto);
 
-    li {
-        margin-bottom: 0.75rem;
-    }
+  span {
+    opacity: 0.7;
+    transition: all 0.3s ease;
 
-    i {
-        color: var(--cor-primaria);
-        width: 20px;
-        margin-right: 0.5rem;
+    &:hover {
+      opacity: 1;
+      color: var(--cor-secundaria);
     }
+  }
+
+  i {
+    color: var(--cor-primaria);
+    width: 20px;
+  }
 }
 
 .social-icons a {
-  color: var(--cor-texto);
+  color: var(--cor-primaria);
   opacity: 0.7;
-  font-size: 1.5rem;
-  margin-right: 1.2rem;
+  font-size: 1.75rem;
   transition: all 0.3s ease;
 
   &:hover {
-    color: var(--cor-primaria);
+    color: var(--cor-secundaria);
     transform: translateY(-3px);
     opacity: 1;
   }
@@ -83,16 +78,26 @@ footer {
 
 .footer-bottom {
   background-color: var(--cor-primaria);
-  padding: 1.2rem 0;
-  text-align: center;
 
-  p, a {
+  p,
+  a {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: #fff;
     text-decoration: none;
+    transition: all 0.3s ease;
   }
 
   a:hover {
     color: var(--cor-destaque);
+  }
+}
+
+@media (max-width: 991px) {
+  .main-footer {
+    padding: 2rem 0;
+  }
+
+  .footer-about {
+    text-align: center;
   }
 }
