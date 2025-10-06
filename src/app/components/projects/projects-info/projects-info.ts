@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -15,11 +15,26 @@ export class ProjectsInfo implements OnInit {
   project: any = null;
   loading = true;
   safeHtmlContent: SafeHtml | null = null;
+  responsiveOptions: any[] = [
+    {
+        breakpoint: '1024px',
+        numVisible: 5
+    },
+    {
+        breakpoint: '768px',
+        numVisible: 3
+    },
+    {
+        breakpoint: '560px',
+        numVisible: 1
+    }
+  ];
 
   constructor(
     private route: ActivatedRoute,
     private projectsService: Projects,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private location: Location
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -27,7 +42,6 @@ export class ProjectsInfo implements OnInit {
     if (id) {
       this.project = await this.projectsService.getProjectById(Number(id));
       if (this.project && this.project.content) {
-        console.log('Conteúdo vindo do Supabase:', this.project.content);
         let dirtyHtml = this.project.content;
         
         const nonBreakingSpace = /&nbsp;/g;
@@ -38,5 +52,9 @@ export class ProjectsInfo implements OnInit {
       }
     }
     this.loading = false;
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 } 

@@ -1,70 +1,86 @@
-<div class="container mt-5 mb-5">
-  @if (project) {
-
-  <div class="row">
-    <div class="col-lg-8">
-      <div class="project-header">
-        <img [src]="project.image_url || 'assets/images/placeholder.png'" alt="{{ project.name }}"
-          class="img-fluid rounded mb-4 shadow-lg shadow-sm">
-        <h1 class="project-title">{{ project.name }}</h1>
-        <div class="meta-info text-muted mb-3">
-          @if (project.updated) {
-          <span> Última edição às {{ project.updated | date:'HH:mm' }} do dia {{ project.updated | date:'dd/MM/yyyy'
-            }}</span>
-          }
+<div class="project-info-page">
+    <div class="container my-5">
+        <div class="breadcrumb-nav mb-4">
+            <a (click)="goBack()" class="breadcrumb-link">
+                <i class="fas fa-arrow-left me-2"></i>
+                Voltar para a página anterior
+            </a>
         </div>
-      </div>
-      <hr class="mb-4">
-      <div>
-        <div class="content-wrapper" [innerHTML]="safeHtmlContent"></div>
 
-        @if (project.gallery_images && project.gallery_images.length > 0) {
-        <div>
-          <p-galleria [value]="project.gallery_images" [numVisible]="4" [circular]="true" [showItemNavigators]="true"
-            [showThumbnails]="true">
+        @if (project) {
+        <div class="row g-5">
+            <div class="col-lg-9">
+                <div class="project-header mb-4">
+                    <h1 class="project-title">{{ project.name }}</h1>
+                    <div class="meta-info text-muted mb-3">
+                        @if (project.updated) {
+                        <span> Última edição às {{ project.updated | date:'HH:mm' }} do dia {{ project.updated |
+                            date:'dd/MM/yyyy'
+                            }}</span>
+                        }
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <div>
+                    <article class="content-wrapper" [innerHTML]="safeHtmlContent"></article>
+                    @if (project.gallery_images && project.gallery_images.length > 0) {
+                    <div class="galleria">
+                        <p-galleria [value]="project.gallery_images" [numVisible]="5" [autoPlay]="true"
+                            [circular]="true" [showItemNavigators]="true" [showThumbnails]="true" [responsiveOptions]="responsiveOptions">
 
-            <ng-template pTemplate="item" let-item>
-              <img [src]="item.itemImageSrc" style="width: 100%; display: block;" [alt]="item.alt" />
-            </ng-template>
-            <ng-template pTemplate="thumbnail" let-item>
-              <div class="grid grid-nogutter justify-content-center">
-                <img [src]="item.thumbnailImageSrc" style="width: 100px; display: block;" [alt]="item.alt" />
-              </div>
-            </ng-template>
-          </p-galleria>
+                            <ng-template pTemplate="item" let-item>
+                                <img [src]="item.itemImageSrc" style="width: 100%; display: block;" [alt]="item.alt" />
+                            </ng-template>
+
+                            <ng-template pTemplate="thumbnail" let-item>
+                                <div class="grid grid-nogutter justify-content-center">
+                                    <img [src]="item.thumbnailImageSrc" style="width: 100px; display: block;"
+                                        [alt]="item.alt" />
+                                </div>
+                            </ng-template>
+                        </p-galleria>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <aside class="sidebar-card card">
+                    <img [src]="project.image_url || 'assets/images/placeholder.png'" alt="{{ project.name }}"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Detalhes do Projeto</h5>
+                        <ul class="list-unstyled project-facts">
+                            <li>
+                                <strong>Status:</strong>
+                                @if (project.status) {
+                                <span class="badge status-badge-active">ATIVO</span>
+                                } @else {
+                                <span class="badge status-badge-inactive">INATIVO</span>
+                                }
+                            </li>
+                            <li><strong>Início:</strong> <span>{{ project.start | date:'dd/MM/yyyy' }}</span></li>
+                            @if (project.finish) {
+                            <li><strong>Conclusão prevista:</strong> <span>{{ project.finish | date:'dd/MM/yyyy'
+                                    }}</span>
+                            </li>
+                            }
+                        </ul>
+                        <hr>
+                        <p class="fw-bold text-center mb-3">Apoie esta causa!</p>
+                        <div class="d-grid">
+                            <a href="https://www.vakinha.com.br/5580617" target="_blank" class="btn btn-donate">Fazer
+                                uma Doação</a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
         </div>
+        } @else if (loading) {
+        <p class="text-center">Carregando projeto...</p>
+        } @else {
+        <div class="alert alert-warning text-center">Projeto não encontrado.</div>
         }
-      </div>
     </div>
-
-    <div class="col-lg-4">
-      <div class="sidebar-card card">
-        <div class="card-body">
-          <h5 class="card-title">Informações Relevantes</h5>
-          <ul class="list-unstyled project-facts">
-            <li>
-              <strong>Status:</strong>
-              @if (project.status) {
-              <span class="badge status-badge-active">ATIVO</span>
-              } @else {
-              <span class="badge status-badge-inactive">INATIVO</span>
-              }
-            </li>
-            <li><strong>Início:</strong> {{ project.start | date:'dd/MM/yyyy' }}</li>
-            @if (project.finish) {
-            <li><strong>Conclusão prevista:</strong> {{ project.finish | date:'dd/MM/yyyy' }}</li>
-            }
-          </ul>
-          <hr>
-          <p class="fw-bold text-center">Apoie esta causa!</p>
-          <div class="d-grid">
-            <a href="https://www.vakinha.com.br/5580617" target="_blank" class="btn btn-donate">Fazer uma Doação</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  } @else {
-  <p>Carregando projeto...</p>
-  }
 </div>
