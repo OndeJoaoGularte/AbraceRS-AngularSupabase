@@ -1,36 +1,55 @@
-<div class="container mt-4">
-  @if (post) {
-    <a routerLink="/posts">&larr; Voltar para o blog</a>
-    <h1 class="mt-3">{{ post.title }}</h1>
+<div class="post-info-page">
+    <div class="container my-5">
+        @if (post) {
+        <div class="row mx-md-5 mx-1 d-flex align-center">
+            <div class="post-header mb-4">
+                <img [src]="post.image_url || 'assets/images/placeholder.png'" alt="{{ post.title }}"
+                    class="text-center img-fluid rounded mb-5 shadow-lg shadow-sm">
+                <h1 class="post-title">{{ post.title }}</h1>
+                <div class="meta-info text-muted mb-3">
+                    <span>Publicado em: {{ post.publish | date:'dd/MM/yyyy' }}</span>
 
-    <div class="meta-info text-muted mb-3">
-      <span>Publicado em: {{ post.publish | date:'dd/MM/yyyy' }}</span>
-      
-      @if (post.updated) {
-        <span> | Última edição às {{ post.updated | date:'HH:mm' }} do dia {{ post.updated | date:'dd/MM/yyyy' }}</span>
-      }
-    </div>
+                    @if (post.updated) {
+                    <span> | Última edição às {{ post.updated | date:'HH:mm' }} do dia {{ post.updated |
+                        date:'dd/MM/yyyy' }}</span>
+                    }
+                </div>
+            </div>
+            <div class="breadcrumb-nav mb-4">
+                <a (click)="goBack()" class="breadcrumb-link">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    Voltar para a página anterior
+                </a>
+            </div>
+            <hr class="mb-4">
+            <div class="post-content">
+                <div class="content-wrapper" [innerHTML]="safeHtmlContent"></div>
 
-    <hr class="mb-4">
-      <div>
-        <div class="content-wrapper" [innerHTML]="safeHtmlContent"></div>
+                @if (post.gallery_images && post.gallery_images.length > 0) {
+                <div>
+                    <p-galleria [value]="post.gallery_images" [numVisible]="4" [circular]="true"
+                        [showItemNavigators]="true" [showThumbnails]="true">
 
-        @if (post.gallery_images && post.gallery_images.length > 0) {
-        <div>
-          <p-galleria [value]="post.gallery_images" [numVisible]="4" [circular]="true" [showItemNavigators]="true"
-            [showThumbnails]="true">
-
-            <ng-template pTemplate="item" let-item>
-              <img [src]="item.itemImageSrc" style="width: 100%; display: block;" [alt]="item.alt" />
-            </ng-template>
-            <ng-template pTemplate="thumbnail" let-item>
-              <div class="grid grid-nogutter justify-content-center">
-                <img [src]="item.thumbnailImageSrc" style="width: 100px; display: block;" [alt]="item.alt" />
-              </div>
-            </ng-template>
-          </p-galleria>
+                        <ng-template pTemplate="item" let-item>
+                            <img [src]="item.itemImageSrc" style="width: 100%; display: block;" [alt]="item.alt" />
+                        </ng-template>
+                        <ng-template pTemplate="thumbnail" let-item>
+                            <div class="grid grid-nogutter justify-content-center">
+                                <img [src]="item.thumbnailImageSrc" style="width: 100px; display: block;"
+                                    [alt]="item.alt" />
+                            </div>
+                        </ng-template>
+                    </p-galleria>
+                </div>
+                }
+            </div>
         </div>
+
+
+        } @else if (loading) {
+        <p class="text-center">Carregando projeto...</p>
+        } @else {
+        <div class="alert alert-warning text-center">Projeto não encontrado.</div>
         }
-      </div>
-  }
+    </div>
 </div>

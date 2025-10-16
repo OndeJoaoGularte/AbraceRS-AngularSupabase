@@ -29,6 +29,7 @@ export class Junte implements OnInit {
   adminViewTab: 'associates' | 'volunteers' = 'associates';
   associatesList: any[] = [];
   volunteersList: any[] = [];
+  isLoadingAdminData = false;
   expandedSubmissionId: number | null = null;
 
   constructor(
@@ -76,15 +77,22 @@ export class Junte implements OnInit {
 
   async showAdminView() {
     this.viewMode = 'admin';
-    this.associatesList = await this.membershipService.getAssociates();
+    this.isLoadingAdminData = true;
+
+    const [associates, volunteers] = await Promise.all([
+      this.membershipService.getAssociates(),
+      this.membershipService.getVolunteers()
+    ]);
+
+    this.associatesList = associates;
+    this.volunteersList = volunteers;
+    
+    this.isLoadingAdminData = false;
   }
 
   async changeAdminTab(tab: 'associates' | 'volunteers') {
     this.adminViewTab = tab;
     this.expandedSubmissionId = null;
-    if (tab === 'volunteers' && this.volunteersList.length === 0) {
-      this.volunteersList = await this.membershipService.getVolunteers();
-    }
   }
 
   toggleAccordion(id: number) {

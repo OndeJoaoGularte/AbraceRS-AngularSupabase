@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -19,7 +19,8 @@ export class PostsInfo implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private postsService: Posts,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private location: Location
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -38,5 +39,9 @@ export class PostsInfo implements OnInit {
       }
     }
     this.loading = false;
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 } 
