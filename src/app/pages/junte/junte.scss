@@ -16,3 +16,73 @@
     border-color: var(--cor-primaria);
   }
 }
+
+.admin-view {
+  .nav-tabs .nav-link {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--cor-texto);
+    &.active {
+      background-color: var(--cor-fundo);
+      border-color: #ddd #ddd var(--cor-fundo);
+      color: var(--cor-primaria);
+    }
+  }
+
+  .submission-list {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .submission-item {
+    border-bottom: 1px solid #ddd;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .submission-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #f8f9fa;
+    }
+
+    .header-main {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-contact {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+    
+    i {
+      transition: transform 0.3s ease;
+    }
+    i.expanded {
+      transform: rotate(90deg);
+    }
+  }
+
+  .submission-details {
+    padding: 1.5rem;
+    background-color: var(--cor-fundo);
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0;
+      li {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}

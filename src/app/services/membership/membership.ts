@@ -31,4 +31,28 @@ export class Membership {
     }
     return { success: true, data };
   }
+
+  /*
+    Função para trazer os dados para a tabela de voluntários
+  */
+
+  async getAssociates() {
+    const { data, error } = await this.supabaseService.client
+      .from('associates')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) console.error('Erro ao buscar associados:', error);
+    return data || [];
+  }
+
+  async getVolunteers() {
+    const { data, error } = await this.supabaseService.client
+      .from('volunteers')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) console.error('Erro ao buscar voluntários:', error);
+    return data || [];
+  }
 }

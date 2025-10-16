@@ -1,16 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Membership } from '../../services/membership/membership';
+import { Auth } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-junte',
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './junte.html',
-  styleUrl: './junte.scss'
+  styleUrl: './junte.scss',
 })
 export class Junte implements OnInit {
+  viewMode: 'selection' | 'form' | 'admin' = 'selection';
   activeForm: 'associate' | 'volunteer' | null = null;
   isSubmitting = false;
   submittedSuccessfully: boolean | null = null;
@@ -19,10 +26,16 @@ export class Junte implements OnInit {
   associateForm: FormGroup;
   volunteerForm: FormGroup;
 
+  adminViewTab: 'associates' | 'volunteers' = 'associates';
+  associatesList: any[] = [];
+  volunteersList: any[] = [];
+  expandedSubmissionId: number | null = null;
+
   constructor(
     private fb: FormBuilder,
     private membershipService: Membership,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public authService: Auth
   ) {
     this.associateForm = this.fb.group({
       person_type: ['PESSOA_FISICA', Validators.required],
@@ -38,26 +51,48 @@ export class Junte implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
       cpf: ['', Validators.required],
-      how_to_help: ['', Validators.required]
+      how_to_help: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.associateForm.get('person_type')?.valueChanges.subscribe(type => {
+    this.associateForm.get('person_type')?.valueChanges.subscribe((type) => {
       this.onPersonTypeChange(type);
     });
 
-    this.route.queryParams.subscribe(params => {
-      const formType = params['form']; 
-      
+    this.route.queryParams.subscribe((params) => {
+      const formType = params['form'];
+
       if (formType === 'associate' || formType === 'volunteer') {
         this.showForm(formType);
       }
     });
   }
-  
+
   showForm(type: 'associate' | 'volunteer') {
     this.activeForm = type;
+    this.viewMode = 'form';
+  }
+
+  async showAdminView() {
+    this.viewMode = 'admin';
+    this.associatesList = await this.membershipService.getAssociates();
+  }
+
+  async changeAdminTab(tab: 'associates' | 'volunteers') {
+    this.adminViewTab = tab;
+    this.expandedSubmissionId = null;
+    if (tab === 'volunteers' && this.volunteersList.length === 0) {
+      this.volunteersList = await this.membershipService.getVolunteers();
+    }
+  }
+
+  toggleAccordion(id: number) {
+    if (this.expandedSubmissionId === id) {
+      this.expandedSubmissionId = null; 
+    } else {
+      this.expandedSubmissionId = id; 
+    }
   }
 
   onPersonTypeChange(type: string): void {
@@ -71,7 +106,8 @@ export class Junte implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    const form = this.activeForm === 'associate' ? this.associateForm : this.volunteerForm;
+    const form =
+      this.activeForm === 'associate' ? this.associateForm : this.volunteerForm;
     if (form.invalid) {
       form.markAllAsTouched();
       return;
@@ -87,10 +123,12 @@ export class Junte implements OnInit {
       this.submittedFormType = 'de voluntariado';
       result = await this.membershipService.submitVolunteerForm(form.value);
     }
-    
+
     this.submittedSuccessfully = result.success;
     if (!result.success) {
-      alert(`Ocorreu um erro ao enviar seu formulário ${this.submittedFormType}. Tente novamente.`);
+      alert(
+        `Ocorreu um erro ao enviar seu formulário ${this.submittedFormType}. Tente novamente.`
+      );
     }
 
     this.isSubmitting = false;
