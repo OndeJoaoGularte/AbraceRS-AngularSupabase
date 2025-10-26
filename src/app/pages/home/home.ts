@@ -14,7 +14,7 @@ import { Auth } from '../../services/auth/auth';
 export class Home implements OnInit {
   loading = true;
 
-  heroImageUrl = 'assets/images/quemsomos/instituto.jpg';
+  heroImageUrl = 'assets/images/home/instituto.jpg';
   
   // Propriedades para os projetos
   featuredProject: any = null;
