@@ -42,6 +42,7 @@
   transform: scale(1.05);
   z-index: 10;
   position: relative;
+  transition: transform 0.3s ease;
 
   &:hover {
     transform: scale(1.08);
@@ -154,7 +155,8 @@
   }
 }
 
-.about-section, .donate-section {
+.about-section,
+.donate-section {
   padding-top: 0;
 }
 
@@ -173,41 +175,20 @@
   }
 }
 
-.breakout-text-section {
-  padding: 3rem 0;
-
-  .breakout {
-    font-size: 2.25rem;
-    font-weight: 700;
-    line-height: 1.5;
-    color: var(--cor-texto);
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-
-    strong {
-      color: var(--cor-secundaria);
-      font-weight: 800;
-      font-size: 3rem;
-    }
-  }
-}
-
 @media (max-width: 991px) {
   .featured-card {
-    transform: scale(1); 
+    transform: none;
     margin-bottom: 1.5rem;
-  }
-}
 
-@media (max-width: 768px) {
-  .breakout-text-section {
-    padding: 3rem 0;
-    .breakout-title {
-      font-size: 2rem;
+    &:hover {
+      transform: none;
     }
-    .breakout-text {
-      font-size: 1.5rem;
+  }
+
+  .associate-section .selection-card {
+    &:hover {
+      transform: none;
+      box-shadow: none;
     }
   }
 }
