@@ -52,12 +52,18 @@
 }
 
 .btn-pdf {
-    border-color: var(--cor-secundaria);
-    color: var(--cor-secundaria);
-    font-weight: 600;
+  border-color: var(--cor-secundaria);
+  color: var(--cor-secundaria);
+  font-weight: 600;
 
-    &:hover {
-        background-color: var(--cor-secundaria);
-        color: #fff;
-    }
+  &:hover {
+    background-color: var(--cor-secundaria);
+    color: #fff;
+  }
+}
+
+@media (max-width: 991px) {
+  .section-origin {
+    text-align: center;
+  }
 }

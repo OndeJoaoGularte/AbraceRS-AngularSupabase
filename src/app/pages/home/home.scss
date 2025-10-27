@@ -191,4 +191,21 @@
       box-shadow: none;
     }
   }
+
+  .about-section,
+  .associate-section {
+    text-align: center;
+  }
+
+  .supporters-grid {
+    .supporter-logo img {
+      width: 50px;
+      height: 50px;
+    }
+
+    &.master .supporter-logo img {
+      width: 100px;
+      height: 100px;
+    }
+  }
 }
