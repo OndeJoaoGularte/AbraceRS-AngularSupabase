@@ -11,9 +11,9 @@
   <section class="abrace-sectionw">
     <div class="container">
       @if (loading) {
-      <p>Carregando...</p>
+      <p class="text-center">Carregando...</p>
       } @else if (featuredPost) {
-      <div class="featured-post-card">
+      <a [routerLink]="['/post', featuredPost.id]" class="featured-post-card text-decoration-none text-reset">
         <div class="row g-0">
           <div class="col-lg-7">
             <img [src]="featuredPost.image_url || 'assets/images/placeholder.png'" class="featured-image"
@@ -27,16 +27,14 @@
               <p class="card-text text-muted mt-3">
                 <small>Publicado em: {{ featuredPost.publish | date:'dd/MM/yyyy' }}</small>
                 @if (featuredPost.updated) {
-                <small> | Última edição às {{ featuredPost.updated | date:'HH:mm' }} do dia {{ featuredPost.updated | date:'dd/MM/yyyy'
-                  }}</small>
+                <small> | Última edição às {{ featuredPost.updated | date:'HH:mm' }} do dia {{ featuredPost.updated | date:'dd/MM/yyyy' }}</small>
                 }
               </p>
-              <a [routerLink]="['/post', featuredPost.id]" class="btn btn-success mt-4 align-self-start">Continuar
-                Lendo</a>
+              <span class="btn btn-success mt-4 align-self-start">Continuar Lendo</span>
             </div>
           </div>
         </div>
-      </div>
+      </a>
       }
     </div>
   </section>

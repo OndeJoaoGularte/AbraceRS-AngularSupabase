@@ -1,13 +1,21 @@
 .featured-post-card {
+  display: block; // Garante que o <a> se comporte como uma caixa
   background-color: var(--cor-fundo);
-  border-radius: 12px;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.07);
-  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer; // Reforça que é clicável
 
   &:hover {
-    box-shadow: 0 10px 35px rgba(0,0,0,0.1);
     transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+    // Opcional: fazer o "botão" mudar de cor quando passa o mouse no card inteiro
+    .btn-success {
+      background-color: #157347; // Cor de hover padrão do btn-success
+      border-color: #146c43;
+    }
   }
 
   .card-body {
