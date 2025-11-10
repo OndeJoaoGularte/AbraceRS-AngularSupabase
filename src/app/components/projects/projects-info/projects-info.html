@@ -29,12 +29,12 @@
                             [circular]="true" [showItemNavigators]="true" [showThumbnails]="true" [responsiveOptions]="responsiveOptions">
 
                             <ng-template pTemplate="item" let-item>
-                                <img [src]="item.itemImageSrc" style="width: 100%; display: block;" [alt]="item.alt" />
+                                <img [src]="item.itemImageSrc" style="width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover;" [alt]="item.alt" />
                             </ng-template>
 
                             <ng-template pTemplate="thumbnail" let-item>
                                 <div class="grid grid-nogutter justify-content-center">
-                                    <img [src]="item.thumbnailImageSrc" style="width: 100px; display: block;"
+                                    <img [src]="item.thumbnailImageSrc" style="width: 100px; display: block; aspect-ratio: 16/9; object-fit: cover;"
                                         [alt]="item.alt" />
                                 </div>
                             </ng-template>
