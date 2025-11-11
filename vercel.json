@@ -1,0 +1,15 @@
+{
+  "framework": "angular",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/angular",
+      "config": {
+        "outputDirectory": "dist/abracers-angular-supabase" 
+      }
+    }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
