@@ -12,16 +12,10 @@ export class Supabase {
     const supabaseUrl = environment.supabaseUrl;
     const supabaseKey = environment.supabaseKey;
 
-    if (!supabaseUrl) {
-      throw new Error("Erro de build: A variável SUPABASE_URL não foi definida no Vercel.");
-    }
-    if (!supabaseKey) {
-      throw new Error("Erro de build: A variável SUPABASE_KEY não foi definida no Vercel.");
+    if (!supabaseUrl || !supabaseKey) {
+       throw new Error("Erro crítico: Variáveis de ambiente do Supabase não encontradas.");
     }
 
-    this.client = createClient(
-      supabaseUrl, 
-      supabaseKey
-    );
+    this.client = createClient(supabaseUrl!, supabaseKey!);
   }
 }
