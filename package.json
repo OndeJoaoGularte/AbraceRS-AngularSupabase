@@ -4,8 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "prebuild": "node set-env.js",
-    "build": "ng build --configuration production",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy": "ng build --base-href /AbraceRS-AngularSupabase/ && npx angular-cli-ghpages --dir=dist/abracers-angular-supabase/browser"
