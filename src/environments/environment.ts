@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  supabaseUrl: process.env['NG_APP_SUPABASE_URL'],
-  supabaseKey: process.env['NG_APP_SUPABASE_KEY']
+  supabaseUrl: process.env['VERCEL_PUBLIC_SUPABASE_URL'],
+  supabaseKey: process.env['VERCEL_PUBLIC_SUPABASE_KEY']
 };
