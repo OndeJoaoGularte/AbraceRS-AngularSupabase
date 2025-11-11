@@ -1,33 +1,34 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient, User, AuthError } from '@supabase/supabase-js';
-import { environment } from '../../../environments/environment';
+import { User, AuthError } from '@supabase/supabase-js';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Supabase } from '../supabase/supabase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth {
-  private supabase: SupabaseClient;
   
   private currentUser = new BehaviorSubject<User | null>(null); // guarda o estado atual do usuário
   public currentUser$: Observable<User | null> = this.currentUser.asObservable();
 
-  constructor(private router: Router) {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+  constructor(
+    private router: Router,
+    private supabaseService: Supabase
+  ) {
 
-    this.supabase.auth.onAuthStateChange((event, session) => { // monitora a mudança do estado de usuário
-      this.currentUser.next(session?.user ?? null); // atualiza o BehaviorSubject com os novos dados
+    this.supabaseService.client.auth.onAuthStateChange((event, session) => {
+      this.currentUser.next(session?.user ?? null);
     });
   }
 
   async signInWithPassword(email: string, password: string): Promise<{ user: User | null; error: AuthError | null }> {
-    const { data, error } = await this.supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await this.supabaseService.client.auth.signInWithPassword({ email, password });
     return { user: data.user, error };
   }
 
   async signOut(): Promise<void> {
-    await this.supabase.auth.signOut();
+    await this.supabaseService.client.auth.signOut();
     this.router.navigate(['/home']);
   }
 
