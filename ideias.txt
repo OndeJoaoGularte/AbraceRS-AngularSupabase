@@ -1,6 +1,0 @@
-abrir projeto editado ao invés de voltar para a página de projetos
-pré-visualização formulário
-templates formulário
-abrir imagens
-acrescentar o estatuto social, prestação de contas e projetos (PDFs)
-botão de voltar no proj-info e post-info
