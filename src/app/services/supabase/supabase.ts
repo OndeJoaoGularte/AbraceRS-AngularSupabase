@@ -20,8 +20,8 @@ export class Supabase {
     }
 
     this.client = createClient(
-      environment.supabaseUrl, 
-      environment.supabaseKey
+      supabaseUrl, 
+      supabaseKey
     );
   }
 }
