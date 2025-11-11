@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  supabaseUrl: process.env['VERCEL_PUBLIC_SUPABASE_URL'],
-  supabaseKey: process.env['VERCEL_PUBLIC_SUPABASE_KEY']
+  supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
+  supabaseKey: import.meta.env.VITE_SUPABASE_KEY
 };
