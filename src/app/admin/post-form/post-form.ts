@@ -62,8 +62,8 @@ export class PostForm implements OnInit {
         this.imagePreview = post.image_url;
       }
 
-      if (post.gallery_images) {
-        this.existingGalleryImages = post.gallery_images;
+      if (post.gallery_img) {
+        this.existingGalleryImages = post.gallery_img;
       }
     }
   }
@@ -157,7 +157,7 @@ export class PostForm implements OnInit {
     const formValue = {
       ...this.postForm.value,
       image_url: imageUrl,
-      gallery_images: finalGalleryImages,
+      gallery_img: finalGalleryImages,
     };
     // converte os valores dos selects para boolean
     formValue.public = formValue.public === 'true' || formValue.public === true;

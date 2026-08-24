@@ -1,39 +1,55 @@
-import { Injectable } from '@angular/core';
-import { Supabase } from '../supabase/supabase';
+import { Injectable, inject } from '@angular/core';
+import { Supabase } from '../supabase/supabase'; 
+
+export interface Project {
+  id?: number;
+  name: string;
+  description: string;
+  started_at?: string | null;
+  finished_at?: string | null;
+  content?: string;
+  image_url?: string;
+  updated_at?: string;
+  gallery_img?: string[];
+  status: boolean;
+  active: boolean;
+  public: boolean;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class Projects {
-  constructor(private supabaseService: Supabase) {}
+  private supabaseService = inject(Supabase);
+  private supabase = this.supabaseService.client;
+  private readonly TABLE = 'projects';
+  private readonly BUCKET = 'project-images';
 
   async getProjects(
-    filterStatus: 'all' | boolean,
+    filterActive: 'all' | boolean, 
     filterOrdination: string,
     searchTool: string,
     isUserAdmin: boolean
-  ) {
-    let query = this.supabaseService.client.from('projects').select('*'); // seleciona todos os campos da tabela
+  ): Promise<Project[]> {
+    let query = this.supabase.from(this.TABLE).select('*').eq('status', true);
 
     if (!isUserAdmin) {
       query = query.eq('public', true);
     }
 
-    if (filterStatus !== 'all') {
-      query = query.eq('status', filterStatus); // se o valor não for 'all', o filtro é adicionado
+    if (filterActive !== 'all') {
+      query = query.eq('active', filterActive);
     }
 
     if (searchTool) {
-      query = query.or(
-        `name.ilike.%${searchTool}%,description.ilike.%${searchTool}%` //busca o termo em diversas colunas da tabela
-      );
+      query = query.or(`name.ilike.%${searchTool}%,description.ilike.%${searchTool}%`);
     }
 
-    const [column, direction] = filterOrdination.split('-'); // regra de ordenação, column é variável enquanto
-    const asc = direction === 'asc'; // direction vai ser sempre ascendente ou descendente
+    const [column, direction] = filterOrdination.split('-');
+    const asc = direction === 'asc';
 
-    if (column === 'updated') {
-      query = query.order(column, { ascending: asc, nullsFirst: false }); // valores vazios de 'updated' por último
+    if (column === 'updated_at') {
+      query = query.order(column, { ascending: asc, nullsFirst: false });
     } else {
       query = query.order(column, { ascending: asc });
     }
@@ -44,111 +60,101 @@ export class Projects {
       console.error('Erro ao buscar projetos:', error);
       return [];
     }
-    return data;
+    return data as Project[];
   }
 
-  /*
-    CRUD de Projetos
-  */
+  async getLatestProjects(limit: number = 3): Promise<Project[]> {
+    const { data, error } = await this.supabase
+      .from(this.TABLE)
+      .select('*')
+      .eq('status', true)
+      .eq('public', true)
+      .eq('active', true)
+      .order('updated_at', { ascending: false })
+      .limit(limit);
 
-  async getProjectById(id: number) { // busca um projeto pelo ID
-    const { data, error } = await this.supabaseService.client
-      .from('projects')
-      .select('*') // seleciona todos os campos da tabela
-      .eq('id', id) // filtra pelo ID
-      .single(); // resultado único
+    if (error) {
+      console.error('Erro ao buscar últimos projetos da Home:', error);
+      return [];
+    }
+    return (data || []) as Project[];
+  }
+
+  async getProjectById(id: number): Promise<Project | null> {
+    const { data, error } = await this.supabase
+      .from(this.TABLE)
+      .select('*')
+      .eq('id', id)
+      .eq('status', true)
+      .single();
 
     if (error) {
       console.error('Erro ao buscar projeto pelo ID:', error);
       return null;
     }
-    return data;
+    return data as Project;
   }
 
-  async createProject(project: any) {
-    const { data, error } = await this.supabaseService.client
-      .from('projects')
-      .insert([project]) // insere um novo objeto na tabela
-      .select(); // retorna o objeto criado
+  async createProject(project: Partial<Project>) {
+    const { data, error } = await this.supabase
+      .from(this.TABLE)
+      .insert([project])
+      .select();
+      
     if (error) console.error('Erro ao criar projeto:', error);
     return { data, error };
   }
 
-  async updateProject(id: number, project: any) {
-    const { data, error } = await this.supabaseService.client
-      .from('projects')
-      .update(project) // atualiza o objeto
-      .eq('id', id) // seleciona o ID correspondente
-      .select(); // retorna o objeto atualizado
+  async updateProject(id: number, project: Partial<Project>) {
+    project.updated_at = new Date().toISOString();
+
+    const { data, error } = await this.supabase
+      .from(this.TABLE)
+      .update(project)
+      .eq('id', id)
+      .select();
+      
     if (error) console.error('Erro ao atualizar projeto:', error);
     return { data, error };
   }
 
   async deleteProject(id: number) {
-    const { error } = await this.supabaseService.client
-      .from('projects')
-      .delete()    // apaga o objeto
-      .eq('id', id); // seleciona o ID correspondente
-    if (error) console.error('Erro ao deletar projeto:', error);
+    const { error } = await this.supabase
+      .from(this.TABLE)
+      .update({ status: false, updated_at: new Date().toISOString() })
+      .eq('id', id);
+      
+    if (error) console.error('Erro ao fazer soft delete do projeto:', error);
     return { error };
   }
 
-  /*
-    Upload de imagens
-  */
-
   async uploadProjectImage(file: File): Promise<string | null> {
     try {
-      const fileName = `${Date.now()}-${file.name}`; // cria um nome único ao arquivo
-      const bucket = 'project-images'; // define o destino
+      const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+      
+      const { error: uploadError } = await this.supabase.storage
+        .from(this.BUCKET)
+        .upload(fileName, file);
 
-      const { data, error: uploadError } =
-        await this.supabaseService.client.storage
-          .from(bucket)
-          .upload(fileName, file); // envia o arquivo para o bucket
+      if (uploadError) throw uploadError;
 
-      if (uploadError) {
-        throw uploadError;
-      }
+      const { data } = this.supabase.storage
+        .from(this.BUCKET)
+        .getPublicUrl(fileName);
 
-      const {
-        data: { publicUrl },
-      } = this.supabaseService.client.storage
-        .from(bucket)
-        .getPublicUrl(fileName); // pega a URL pública da imagem
-
-      return publicUrl; // retorna a URL da imagem enviada
+      return data.publicUrl;
     } catch (error) {
       console.error('Erro no upload da imagem do projeto:', error);
       return null;
     }
   }
 
-  /*
-    Projetos de destaque para a Home
-  */
-
-  async getLatestProjects(limit: number = 3) {
-  const { data, error } = await this.supabaseService.client
-    .from('projects')
-    .select('*')
-    .eq('status', true)
-    .eq('public', true)
-    .order('updated', { ascending: false })
-    .limit(limit);
-
-  if (error) console.error('Erro ao buscar últimos projetos:', error);
-  return data || [];
-}
-
-async deleteProjectImage(fileName: string): Promise<{ error: any }> {
-    const { error } = await this.supabaseService.client.storage
-      .from('project-images')
+  async deleteProjectImage(fileName: string): Promise<{ error: any }> {
+    const { error } = await this.supabase.storage
+      .from(this.BUCKET)
       .remove([fileName]);
 
-    if (error) {
-      console.error('Erro ao deletar imagem do storage:', error);
-    }
+    if (error) console.error('Erro ao deletar imagem do storage:', error);
     return { error };
   }
 }

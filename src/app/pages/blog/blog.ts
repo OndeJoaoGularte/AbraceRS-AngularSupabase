@@ -22,7 +22,7 @@ export class Blog implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const isUserAdmin = this.authService.isLoggedIn();
-    const allPosts = await this.postsService.getPosts('publish-desc', '', isUserAdmin); // puxa todos os posts ordenado pelo mais recente
+    const allPosts = await this.postsService.getPosts('published_at-desc', '', isUserAdmin); // puxa todos os posts ordenado pelo mais recente
 
     if (allPosts && allPosts.length > 0) {
       this.featuredPost = allPosts[0]; // mostra o post mais recente

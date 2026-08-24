@@ -16,7 +16,7 @@ export class PostsList implements OnInit, OnDestroy {
   posts: any[] = [];
   loading = true;
   searchTool: string = '';
-  presentOrdination: string = 'publish-desc';
+  presentOrdination: string = 'published_at-desc';
 
   private searchSubject = new Subject<string>();
   private searchSubscription!: Subscription;

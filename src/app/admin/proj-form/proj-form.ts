@@ -37,8 +37,8 @@ export class ProjForm implements OnInit {
       description: ['', Validators.required],
       status: [true, Validators.required],
       public: [false, Validators.required],
-      start: ['', Validators.required],
-      finish: [''],
+      started_at: ['', Validators.required],
+      finished_at: [''],
       content: [''],
       image_url: [''],
     });
@@ -59,9 +59,9 @@ export class ProjForm implements OnInit {
   async loadProjectData(id: number): Promise<void> {
     const project = await this.projectsService.getProjectById(id);
     if (project) {
-      project.start = new Date(project.start).toISOString().split('T')[0];
-      project.finish = project.finish
-        ? new Date(project.finish).toISOString().split('T')[0]
+      project.started_at = new Date().toISOString().split('T')[0];
+      project.finished_at = project.finished_at
+        ? new Date(project.finished_at).toISOString().split('T')[0]
         : '';
       this.projectForm.patchValue(project);
 
@@ -69,8 +69,8 @@ export class ProjForm implements OnInit {
         this.imagePreview = project.image_url;
       }
 
-      if (project.gallery_images) {
-        this.existingGalleryImages = project.gallery_images;
+      if (project.gallery_img) {
+        this.existingGalleryImages = project.gallery_img;
       }
     }
   }
@@ -164,7 +164,7 @@ export class ProjForm implements OnInit {
     const formValue = {
       ...this.projectForm.value,
       image_url: imageUrl,
-      gallery_images: finalGalleryImages,
+      gallery_img: finalGalleryImages,
     };
 
     // converte os valores dos selects para boolean

@@ -25,9 +25,9 @@
               <h2 class="abrace-title mb-3">{{ featuredPost.title }}</h2>
               <p class="card-text text-muted">{{ featuredPost.summary }}</p>
               <p class="card-text text-muted mt-3">
-                <small>Publicado em: {{ featuredPost.publish | date:'dd/MM/yyyy' }}</small>
-                @if (featuredPost.updated) {
-                <small> | Última edição às {{ featuredPost.updated | date:'HH:mm' }} do dia {{ featuredPost.updated | date:'dd/MM/yyyy' }}</small>
+                <small>Publicado em: {{ featuredPost.published_at | date:'dd/MM/yyyy' }}</small>
+                @if (featuredPost.updated_at) {
+                <small> | Última edição às {{ featuredPost.updated_at | date:'HH:mm' }} do dia {{ featuredPost.updated_at | date:'dd/MM/yyyy' }}</small>
                 }
               </p>
               <span class="btn btn-success mt-4 align-self-start">Continuar Lendo</span>
